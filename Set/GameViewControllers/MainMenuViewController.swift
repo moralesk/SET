@@ -12,50 +12,54 @@ import UIKit
 class MainMenuViewController: UIViewController {
 
     let greetingLabel = UILabel()
-    var playButton: MainMenuButton?
-    var tutorialButton: MainMenuButton?
-    var buttons: [MainMenuButton] = []
+    var playButton: MainSelectionButton?
+    var tutorialButton: MainSelectionButton?
+    var buttons: [MainSelectionButton] = []
     var addButtonPadding = false
 
     // MARK: Lifecycle Methods
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = .white
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         setupGreetingLabel()
         setupButtons()
     }
 
-    override func updateViewConstraints() {
-        super.updateViewConstraints()
-        updateButtonConstraints()
-        setGreetingConstraints()
-    }
-
     // MARK: View Builders
     private func setupGreetingLabel() {
-        greetingLabel.font = UIFont.boldSystemFont(ofSize: 26)
-        greetingLabel.textAlignment = .center
-        greetingLabel.text = "WELCOME TO SET"
-        self.view.addSubview(greetingLabel)
-        setGreetingConstraints()
+        if greetingLabel.superview == nil {
+            greetingLabel.font = UIFont.boldSystemFont(ofSize: 26)
+            greetingLabel.textAlignment = .center
+            greetingLabel.text = "WELCOME TO SET"
+            self.view.addSubview(greetingLabel)
+            setGreetingConstraints()
+        }
     }
 
     private func setupPlayButton() {
-        playButton = MainMenuButton(text: "PLAY GAME")
-        guard let playButton = playButton else {
-            return
+        if playButton?.superview == nil {
+            playButton = MainSelectionButton(text: "PLAY GAME")
+            guard let playButton = playButton else {
+                return
+            }
+            playButton.addTarget(self, action: #selector(playSelected), for: .touchUpInside)
+            self.view.addSubview(playButton)
         }
-        playButton.addTarget(self, action: #selector(playSelected), for: .touchUpInside)
-        self.view.addSubview(playButton)
     }
 
     private func setupTutorialButton() {
-        tutorialButton = MainMenuButton(text: "TUTORIAL")
-        guard let tutorialButton = tutorialButton else {
-            return
+        if tutorialButton?.superview == nil {
+            tutorialButton = MainSelectionButton(text: "TUTORIAL")
+            guard let tutorialButton = tutorialButton else {
+                return
+            }
+            tutorialButton.addTarget(self, action: #selector(tutorialSelected), for: .touchUpInside)
+            self.view.addSubview(tutorialButton)
         }
-        tutorialButton.addTarget(self, action: #selector(tutorialSelected), for: .touchUpInside)
-        self.view.addSubview(tutorialButton)
     }
 
     // MARK: Constraints
@@ -101,6 +105,7 @@ class MainMenuViewController: UIViewController {
         guard let playButton = playButton, let tutorialButton = tutorialButton else {
             return
         }
+        buttons.removeAll()
         buttons.append(contentsOf: [playButton, tutorialButton])
         addButtonPadding = buttons.count > 1
         updateButtonConstraints()
@@ -113,7 +118,8 @@ class MainMenuViewController: UIViewController {
 
     // MARK: Selectors
     @objc private func playSelected() {
-        
+        let numberOfPlayersVC = NumberOfPlayersViewController()
+        navigationController?.pushViewController(numberOfPlayersVC, animated: true)
     }
 
     @objc private func tutorialSelected() {

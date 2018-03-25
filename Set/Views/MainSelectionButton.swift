@@ -1,5 +1,5 @@
 //
-//  MainMenuButton.swift
+//  MainSelectionButton.swift
 //  Set
 //
 //  Created by Kelly Morales on 3/24/18.
@@ -9,12 +9,12 @@
 import Foundation
 import UIKit
 
-class MainMenuButton: UIButton {
-
+class MainSelectionButton: UIButton {
+    
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
-
+    
     init(text: String) {
         super.init(frame: .zero)
         backgroundColor = .purple
@@ -23,7 +23,7 @@ class MainMenuButton: UIButton {
         titleLabel?.font = UIFont.boldSystemFont(ofSize: 20)
         setTitleColor(.white, for: .normal)
     }
-
+    
     func activateConstraints() {
         translatesAutoresizingMaskIntoConstraints = false
         let centerX = NSLayoutConstraint(item: self, attribute: NSLayoutAttribute.centerX, relatedBy: NSLayoutRelation.equal, toItem: self.superview, attribute: NSLayoutAttribute.centerX, multiplier: 1, constant: 0)
