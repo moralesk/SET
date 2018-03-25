@@ -14,6 +14,7 @@
 		C969779B2067357E00F6629E /* MainMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C969779A2067357E00F6629E /* MainMenuViewController.swift */; };
 		C96977A020674AD500F6629E /* NumberOfPlayersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C969779F20674AD500F6629E /* NumberOfPlayersViewController.swift */; };
 		C96977A220674C5B00F6629E /* MainSelectionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C96977A120674C5B00F6629E /* MainSelectionButton.swift */; };
+		C9ECF9C6206843160028BCF8 /* SelectionCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9ECF9C5206843160028BCF8 /* SelectionCollectionViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +27,7 @@
 		C969779A2067357E00F6629E /* MainMenuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainMenuViewController.swift; sourceTree = "<group>"; };
 		C969779F20674AD500F6629E /* NumberOfPlayersViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NumberOfPlayersViewController.swift; sourceTree = "<group>"; };
 		C96977A120674C5B00F6629E /* MainSelectionButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainSelectionButton.swift; sourceTree = "<group>"; };
+		C9ECF9C5206843160028BCF8 /* SelectionCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectionCollectionViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -82,6 +84,7 @@
 			isa = PBXGroup;
 			children = (
 				C96977A120674C5B00F6629E /* MainSelectionButton.swift */,
+				C9ECF9C5206843160028BCF8 /* SelectionCollectionViewCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -161,6 +164,7 @@
 				C969779B2067357E00F6629E /* MainMenuViewController.swift in Sources */,
 				C96977A220674C5B00F6629E /* MainSelectionButton.swift in Sources */,
 				C96977A020674AD500F6629E /* NumberOfPlayersViewController.swift in Sources */,
+				C9ECF9C6206843160028BCF8 /* SelectionCollectionViewCell.swift in Sources */,
 				C9697788206734DB00F6629E /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
