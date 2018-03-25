@@ -11,12 +11,19 @@ import UIKit
 
 class NumberOfPlayersViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
 
-    let promptLabel = UILabel()
-    let maxNumberOfPlayers: Int = 4
-    var playerSelectionView: UICollectionView?
-    var continueButton: MainSelectionButton?
+    private let promptLabel = UILabel()
+    private let maxNumberOfPlayers: Int = 4
+    private var playerSelectionView: UICollectionView?
+    private var collectionViewCellWidth: CGFloat {
+        get {
+            return self.view.bounds.height * 0.1
+        }
+    }
+    private let spaceBetweenCollectionViewCells: CGFloat = 5.0
+    private var numberOfPlayers: Int?
+    private var continueButton: MainSelectionButton?
 
-    // MARK: Lifecycle Methods
+    // MARK:- Lifecycle Methods
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = .white
@@ -26,9 +33,11 @@ class NumberOfPlayersViewController: UIViewController, UICollectionViewDataSourc
         super.viewWillAppear(animated)
         setupPromptLabel()
         setupCollectionView()
+        setupContinueButton()
     }
 
-    // MARK: View Setup
+    // MARK:- View Setup
+    // MARK: PromptLabel
     private func setupPromptLabel() {
         if promptLabel.superview == nil {
             promptLabel.font = UIFont.systemFont(ofSize: 24)
@@ -47,7 +56,8 @@ class NumberOfPlayersViewController: UIViewController, UICollectionViewDataSourc
         let height = NSLayoutConstraint(item: promptLabel, attribute: NSLayoutAttribute.height, relatedBy: NSLayoutRelation.equal, toItem: promptLabel.superview, attribute: NSLayoutAttribute.height, multiplier: 0.1, constant: 0)
         NSLayoutConstraint.activate([centerX, top, width, height])
     }
-    
+
+    // MARK: CollectionView
     private func setupCollectionView() {
         if playerSelectionView?.superview == nil {
             let layout = UICollectionViewFlowLayout()
@@ -69,13 +79,63 @@ class NumberOfPlayersViewController: UIViewController, UICollectionViewDataSourc
             NSLayoutConstraint.activate([centerX, top, width, height])
         }
     }
-    
+
+    // MARK: ContinueButton
+    private func setupContinueButton() {
+        if continueButton?.superview == nil {
+            continueButton = MainSelectionButton(text: "CONTINUE")
+            guard let continueButton = continueButton else {
+                return
+            }
+            continueButton.alpha = 0.0
+            continueButton.isUserInteractionEnabled = false
+            continueButton.addTarget(self, action: #selector(continueAction), for: .touchUpInside)
+            self.view.addSubview(continueButton)
+            setContinueButtonConstraints()
+        }
+    }
+
+    private func setContinueButtonConstraints() {
+        guard let continueButton = continueButton else {
+            return
+        }
+        continueButton.activateConstraints()
+        NSLayoutConstraint(item: continueButton, attribute: NSLayoutAttribute.top, relatedBy: NSLayoutRelation.equal, toItem: continueButton.superview, attribute: NSLayoutAttribute.bottom, multiplier: 0.6, constant: 0).isActive = true
+    }
+
+    // MARK:- UICollectionView
+    // MARK: UICollectionViewDelegate
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        for i in 0..<collectionView.numberOfItems(inSection: 0) {
+            let idx = IndexPath(row: i, section: 0)
+            if let cell = collectionView.cellForItem(at: idx) as? SelectionCollectionViewCell {
+                if idx == indexPath {
+                    cell.selectCell()
+                } else {
+                    cell.deselectCell()
+                }
+            }
+        }
+        collectionView.deselectItem(at: indexPath, animated: true)
+        numberOfPlayers = indexPath.row + 1
+        guard let continueButton = continueButton else {
+            return
+        }
+        if continueButton.alpha == 0.0 {
+            UIView.animate(withDuration: 0.5, animations: {
+                continueButton.alpha = 1.0
+                continueButton.isUserInteractionEnabled = true
+            })
+        }
+    }
+
     // MARK: UICollectionViewDataSource
+
     // number of sections defaults to 1 without implementation
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return maxNumberOfPlayers
     }
-    
+
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "SelectionCell", for: indexPath) as? SelectionCollectionViewCell else {
             return UICollectionViewCell()
@@ -83,14 +143,17 @@ class NumberOfPlayersViewController: UIViewController, UICollectionViewDataSourc
         cell.initialize(with: "\(indexPath.row + 1)")
         return cell
     }
-    
+
     // MARK: UICollectionViewDelegateFlowLayout
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let height = self.view.bounds.height * 0.1
-        return CGSize(width: height, height: height)
+        return CGSize(width: collectionViewCellWidth, height: collectionViewCellWidth)
     }
-    
+
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-        return 5.0
+        return spaceBetweenCollectionViewCells
+    }
+
+    // MARK:- Selectors
+    @objc private func continueAction() {
     }
 }

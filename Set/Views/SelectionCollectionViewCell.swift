@@ -14,6 +14,7 @@ class SelectionCollectionViewCell: UICollectionViewCell {
     private var labelText: String?
     private let label = UILabel()
 
+    // MARK: Lifecycle Methods
     init(text: String) {
         super.init(frame: .zero)
         initialize(with: text)
@@ -53,5 +54,14 @@ class SelectionCollectionViewCell: UICollectionViewCell {
         let width = NSLayoutConstraint(item: label, attribute: .width, relatedBy: .equal, toItem: label.superview, attribute: .width, multiplier: 1, constant: 0)
         let height = NSLayoutConstraint(item: label, attribute: .height, relatedBy: .equal, toItem: label.superview, attribute: .height, multiplier: 1, constant: 0)
         NSLayoutConstraint.activate([width, height])
+    }
+
+    // MARK: Helpers
+    func selectCell() {
+        label.textColor = .green
+    }
+
+    func deselectCell() {
+        label.textColor = .white
     }
 }

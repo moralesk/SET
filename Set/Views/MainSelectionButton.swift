@@ -10,11 +10,11 @@ import Foundation
 import UIKit
 
 class MainSelectionButton: UIButton {
-    
+
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
-    
+
     init(text: String) {
         super.init(frame: .zero)
         backgroundColor = .purple
@@ -22,8 +22,10 @@ class MainSelectionButton: UIButton {
         setTitle(text, for: .normal)
         titleLabel?.font = UIFont.boldSystemFont(ofSize: 20)
         setTitleColor(.white, for: .normal)
+        setTitleColor(.green, for: .highlighted)
     }
-    
+
+    /// Activates centerX, width, and height
     func activateConstraints() {
         translatesAutoresizingMaskIntoConstraints = false
         let centerX = NSLayoutConstraint(item: self, attribute: NSLayoutAttribute.centerX, relatedBy: NSLayoutRelation.equal, toItem: self.superview, attribute: NSLayoutAttribute.centerX, multiplier: 1, constant: 0)
