@@ -44,7 +44,23 @@ class GameBoardViewController: UIViewController {
                 let button = drawButtonForPlayer(num: i)
                 playerButtons.append(button)
             }
+        } else {
+            setupScoreLabel()
         }
+    }
+
+    private func setupScoreLabel() {
+        let scoreLabel = UILabel()
+        if scoreLabel.superview == nil {
+            self.view.addSubview(scoreLabel)
+        }
+        scoreLabel.textAlignment = .center
+        scoreLabel.font = UIFont.boldSystemFont(ofSize: 24)
+        scoreLabel.text = "SCORE:"
+        scoreLabel.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint(item: scoreLabel, attribute: .bottom, relatedBy: .equal, toItem: scoreLabel.superview, attribute: .bottomMargin, multiplier: 0.95, constant: 0).isActive = true
+        NSLayoutConstraint(item: scoreLabel, attribute: .centerX, relatedBy: .equal, toItem: scoreLabel.superview, attribute: .centerX, multiplier: 1, constant: 0).isActive = true
+        NSLayoutConstraint(item: scoreLabel, attribute: .width, relatedBy: .equal, toItem: scoreLabel.superview, attribute: .width, multiplier: 0.9, constant: 0).isActive = true
     }
 
     private func drawButtonForPlayer(num: Int) -> PlayerButton {
