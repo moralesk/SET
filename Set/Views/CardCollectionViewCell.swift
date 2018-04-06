@@ -12,6 +12,14 @@ import UIKit
 /// Displays the Card cells in the gameboard collectionView.
 class CardCollectionViewCell: UICollectionViewCell {
 
+    var card: Card? {
+        didSet {
+            if card != nil {
+                setColor()
+            }
+        }
+    }
+
     // MARK: Lifecycle Methods
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -23,8 +31,17 @@ class CardCollectionViewCell: UICollectionViewCell {
     }
 
     private func initialize() {
-        backgroundColor = .purple
         layer.cornerRadius = 3.0
     }
 
+    private func setColor() {
+        if let card = card {
+            switch card.color {
+            case .red: backgroundColor = .red
+            case .black: backgroundColor = .black
+            case .blue: backgroundColor = .blue
+            default: backgroundColor = .purple
+            }
+        }
+    }
 }

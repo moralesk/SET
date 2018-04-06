@@ -38,6 +38,8 @@ class GameBoardViewController: UIViewController, UICollectionViewDataSource, UIC
         }
     }
 
+    private let currentDeck = Deck()
+
     // MARK: Lifecycle Methods
     init(numberOfPlayers: Int) {
         super.init(nibName: nil, bundle: nil)
@@ -51,6 +53,9 @@ class GameBoardViewController: UIViewController, UICollectionViewDataSource, UIC
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = .white
+        self.navigationItem.hidesBackButton = true
+        let backButton = UIBarButtonItem(title: "EXIT", style: UIBarButtonItemStyle.plain, target: self, action: #selector(backAction))
+        self.navigationItem.leftBarButtonItem = backButton
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -185,6 +190,9 @@ class GameBoardViewController: UIViewController, UICollectionViewDataSource, UIC
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CardCell", for: indexPath) as? CardCollectionViewCell else {
             return UICollectionViewCell()
         }
+        if let card = currentDeck.getCard() {
+            cell.card = card
+        }
         return cell
     }
 
@@ -195,5 +203,15 @@ class GameBoardViewController: UIViewController, UICollectionViewDataSource, UIC
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
         return spaceBetweenCollectionViewCells
+    }
+
+    // UIBarButton BackAction
+    @objc func backAction() {
+        let alert = UIAlertController(title: "Are You Sure You Want To Exit?", message: "All data from the current game will be lost.", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Exit", style: .default, handler: { (action) -> Void in
+            self.navigationController?.popViewController(animated: true)
+        }))
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        self.present(alert, animated: true)
     }
 }
