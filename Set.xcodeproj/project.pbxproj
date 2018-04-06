@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C93E0F8D2075892B009DEA10 /* CardCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C93E0F8C2075892B009DEA10 /* CardCollectionViewCell.swift */; };
 		C9697788206734DB00F6629E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9697787206734DB00F6629E /* AppDelegate.swift */; };
 		C969778D206734DB00F6629E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C969778B206734DB00F6629E /* Main.storyboard */; };
 		C969778F206734DB00F6629E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C969778E206734DB00F6629E /* Assets.xcassets */; };
@@ -20,6 +21,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		C93E0F8C2075892B009DEA10 /* CardCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardCollectionViewCell.swift; sourceTree = "<group>"; };
 		C9697784206734DB00F6629E /* Set.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Set.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C9697787206734DB00F6629E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C969778C206734DB00F6629E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -91,6 +93,7 @@
 				C96977A120674C5B00F6629E /* MainSelectionButton.swift */,
 				C9ECF9C5206843160028BCF8 /* SelectionCollectionViewCell.swift */,
 				C9ECF9C92068644B0028BCF8 /* PlayerButton.swift */,
+				C93E0F8C2075892B009DEA10 /* CardCollectionViewCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -167,6 +170,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C93E0F8D2075892B009DEA10 /* CardCollectionViewCell.swift in Sources */,
 				C969779B2067357E00F6629E /* MainMenuViewController.swift in Sources */,
 				C9ECF9CA2068644B0028BCF8 /* PlayerButton.swift in Sources */,
 				C96977A220674C5B00F6629E /* MainSelectionButton.swift in Sources */,
