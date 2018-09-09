@@ -9,10 +9,15 @@
 import Foundation
 import UIKit
 
+/**
+ View controller displaying the options for the number of players to play the game
+ */
 class NumberOfPlayersViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
 
+    /// prompt for selecting number of players
     private let promptLabel = UILabel()
     private let maxNumberOfPlayers: Int = 4
+    /// collection view for options of choosing number of players
     private var playerSelectionView: UICollectionView?
     private var collectionViewCellWidth: CGFloat {
         get {
@@ -67,7 +72,7 @@ class NumberOfPlayersViewController: UIViewController, UICollectionViewDataSourc
             guard let playerSelectionView = playerSelectionView else {
                 return
             }
-            playerSelectionView.register(SelectionCollectionViewCell.self, forCellWithReuseIdentifier: "SelectionCell")
+            playerSelectionView.register(SelectionCollectionViewCell.self, forCellWithReuseIdentifier: SelectionCollectionViewCell.reuseID())
             playerSelectionView.isScrollEnabled = false
             playerSelectionView.backgroundColor = .white
             playerSelectionView.delegate = self
@@ -85,7 +90,7 @@ class NumberOfPlayersViewController: UIViewController, UICollectionViewDataSourc
     // MARK: ContinueButton
     private func setupContinueButton() {
         if continueButton?.superview == nil {
-            continueButton = MainSelectionButton(text: "CONTINUE")
+            continueButton = MainSelectionButton(text: "Continue With \(numberOfPlayers ?? 0) Players")
             guard let continueButton = continueButton else {
                 return
             }
@@ -102,22 +107,14 @@ class NumberOfPlayersViewController: UIViewController, UICollectionViewDataSourc
             return
         }
         continueButton.activateConstraints()
+        continueButton.width?.isActive = false
         NSLayoutConstraint(item: continueButton, attribute: NSLayoutAttribute.top, relatedBy: NSLayoutRelation.equal, toItem: continueButton.superview, attribute: NSLayoutAttribute.bottom, multiplier: 0.6, constant: 0).isActive = true
+        NSLayoutConstraint(item: continueButton, attribute: NSLayoutAttribute.width, relatedBy: NSLayoutRelation.equal, toItem: continueButton.superview, attribute: NSLayoutAttribute.width, multiplier: 0.7, constant: 0).isActive = true
     }
 
     // MARK:- UICollectionView
     // MARK: UICollectionViewDelegate
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        for i in 0..<collectionView.numberOfItems(inSection: 0) {
-            let idx = IndexPath(row: i, section: 0)
-            if let cell = collectionView.cellForItem(at: idx) as? SelectionCollectionViewCell {
-                if idx == indexPath {
-                    cell.selectCell()
-                } else {
-                    cell.deselectCell()
-                }
-            }
-        }
         collectionView.deselectItem(at: indexPath, animated: true)
         numberOfPlayers = indexPath.row + 1
         guard let continueButton = continueButton else {
@@ -129,6 +126,7 @@ class NumberOfPlayersViewController: UIViewController, UICollectionViewDataSourc
                 continueButton.isUserInteractionEnabled = true
             })
         }
+        continueButton.setTitle("Continue With \(numberOfPlayers ?? 0) Players", for: UIControlState())
     }
 
     // MARK: UICollectionViewDataSource
@@ -139,7 +137,7 @@ class NumberOfPlayersViewController: UIViewController, UICollectionViewDataSourc
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "SelectionCell", for: indexPath) as? SelectionCollectionViewCell else {
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SelectionCollectionViewCell.reuseID(), for: indexPath) as? SelectionCollectionViewCell else {
             return UICollectionViewCell()
         }
         cell.initialize(with: "\(indexPath.row + 1)")

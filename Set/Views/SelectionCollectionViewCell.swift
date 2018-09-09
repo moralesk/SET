@@ -28,6 +28,18 @@ class SelectionCollectionViewCell: UICollectionViewCell {
         super.init(coder: aDecoder)
     }
 
+    override var isHighlighted: Bool {
+        didSet {
+            if isHighlighted {
+                self.label.textColor = .green
+            } else {
+                DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.03, execute: {
+                    self.label.textColor = .white
+                })
+            }
+        }
+    }
+
     private func initialize() {
         backgroundColor = .purple
         layer.cornerRadius = 3.0
@@ -56,12 +68,7 @@ class SelectionCollectionViewCell: UICollectionViewCell {
         NSLayoutConstraint.activate([width, height])
     }
 
-    // MARK: Helpers
-    func selectCell() {
-        label.textColor = .green
-    }
-
-    func deselectCell() {
-        label.textColor = .white
+    static func reuseID() -> String {
+        return "SelectionCell"
     }
 }

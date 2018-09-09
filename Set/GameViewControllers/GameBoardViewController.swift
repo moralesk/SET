@@ -156,7 +156,7 @@ class GameBoardViewController: UIViewController, UICollectionViewDataSource, UIC
             guard let gameBoard = gameBoard else {
                 return
             }
-            gameBoard.register(CardCollectionViewCell.self, forCellWithReuseIdentifier: "CardCell")
+            gameBoard.register(CardCollectionViewCell.self, forCellWithReuseIdentifier: CardCollectionViewCell.reuseID())
             gameBoard.isScrollEnabled = false
             gameBoard.backgroundColor = .white
             gameBoard.delegate = self
@@ -187,7 +187,7 @@ class GameBoardViewController: UIViewController, UICollectionViewDataSource, UIC
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CardCell", for: indexPath) as? CardCollectionViewCell else {
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CardCollectionViewCell.reuseID(), for: indexPath) as? CardCollectionViewCell else {
             return UICollectionViewCell()
         }
         if let card = currentDeck.getCard() {

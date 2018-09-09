@@ -9,6 +9,9 @@
 import Foundation
 import UIKit
 
+/**
+ Root view controller. Prompts user to view tutorial or start game flow.
+ */
 class MainMenuViewController: UIViewController {
 
     let greetingLabel = UILabel()
@@ -26,7 +29,7 @@ class MainMenuViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         setupGreetingLabel()
-        setupButtons()
+        arrangeButtons()
     }
 
     // MARK: View Builders
@@ -99,7 +102,7 @@ class MainMenuViewController: UIViewController {
     // MARK: Helpers
 
     /// Builds buttons and determines which order they're displayed in the view from top to bottom
-    private func setupButtons() {
+    private func arrangeButtons() {
         setupPlayButton()
         setupTutorialButton()
         guard let playButton = playButton, let tutorialButton = tutorialButton else {

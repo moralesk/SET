@@ -44,4 +44,8 @@ class CardCollectionViewCell: UICollectionViewCell {
             }
         }
     }
+
+    static func reuseID() -> String {
+        return "CardCell"
+    }
 }

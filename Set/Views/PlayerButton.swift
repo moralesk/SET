@@ -23,7 +23,7 @@ class PlayerButton: UIButton {
         titleLabel?.font = UIFont.boldSystemFont(ofSize: 20)
         setTitleColor(.white, for: .normal)
         setTitle("SCORE:", for: .normal)
-        setTitle("SELECTING", for: .selected)
+        setTitle("SELECTING...", for: .highlighted)
     }
 
     /// All player buttons will have the same height. Other constraints should be defined with the gameboard.
