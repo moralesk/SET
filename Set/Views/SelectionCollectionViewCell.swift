@@ -48,7 +48,7 @@ class SelectionCollectionViewCell: UICollectionViewCell {
             label.textColor = .white
             label.font = UIFont.boldSystemFont(ofSize: 24)
             label.textAlignment = .center
-            addSubview(label)
+            self.contentView.addSubview(label)
         }
         updateLabelConstraints()
     }
