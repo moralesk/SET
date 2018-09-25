@@ -20,11 +20,20 @@ class MainSelectionButton: UIButton {
         super.init(coder: aDecoder)
     }
 
+    init() {
+        super.init(frame: .zero)
+        initialize()
+    }
+
     init(text: String) {
         super.init(frame: .zero)
+        initialize()
+        setTitle(text, for: .normal)
+    }
+
+    private func initialize() {
         backgroundColor = .purple
         layer.cornerRadius = 3.0
-        setTitle(text, for: .normal)
         titleLabel?.font = UIFont.boldSystemFont(ofSize: 20)
         titleLabel?.numberOfLines = 1
         setTitleColor(.white, for: .normal)

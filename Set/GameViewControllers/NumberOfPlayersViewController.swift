@@ -90,7 +90,7 @@ class NumberOfPlayersViewController: UIViewController, UICollectionViewDataSourc
     // MARK: ContinueButton
     private func setupContinueButton() {
         if continueButton?.superview == nil {
-            continueButton = MainSelectionButton(text: "Continue With \(numberOfPlayers ?? 0) Players")
+            continueButton = MainSelectionButton()
             guard let continueButton = continueButton else {
                 return
             }
@@ -117,7 +117,7 @@ class NumberOfPlayersViewController: UIViewController, UICollectionViewDataSourc
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         collectionView.deselectItem(at: indexPath, animated: true)
         numberOfPlayers = indexPath.row + 1
-        guard let continueButton = continueButton else {
+        guard let continueButton = continueButton, let numberOfPlayers = numberOfPlayers else {
             return
         }
         if continueButton.alpha == 0.0 {
@@ -126,7 +126,7 @@ class NumberOfPlayersViewController: UIViewController, UICollectionViewDataSourc
                 continueButton.isUserInteractionEnabled = true
             })
         }
-        continueButton.setTitle("Continue With \(numberOfPlayers ?? 0) Players", for: UIControlState())
+        continueButton.setTitle("Continue With \(numberOfPlayers) Player\(numberOfPlayers > 1 ? "s" : "")", for: UIControlState())
     }
 
     // MARK: UICollectionViewDataSource
