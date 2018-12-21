@@ -51,10 +51,10 @@ class CardCollectionViewCell: UICollectionViewCell {
         guard let card = card else {
             return
         }
-        let shape = String.init(describing: card.shape.hashValue)
-        let fill = String.init(describing: card.fill.hashValue)
-        let count = String.init(describing: card.count.hashValue)
-        let labelFont = UIFont.systemFont(ofSize: 14.0, weight: .heavy)
+        let shape = String.init(describing: card.shape)
+        let fill = String.init(describing: card.fill)
+        let count = String.init(describing: card.count)
+        let labelFont = UIFont.systemFont(ofSize: 10.0, weight: .heavy)
 
         let shapeLabel = UILabel()
         shapeLabel.text = "Shape: \(shape)"
