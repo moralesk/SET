@@ -8,16 +8,15 @@
 
 import Foundation
 
+let sharedDeck = Deck()
+
 class Deck {
 
-    private var currentDeck: [Card] = []
-
-    init() {
-        shuffle()
-    }
+    private var cards: [Card] = []
 
     /// Resets the deck to have 81 cards in a random order
     func shuffle() {
+        cards.removeAll()
         var unshuffledDeck: [Card] = []
         for i in 0..<Card.Color.count.rawValue {
             for j in 0..<Card.Shape.count.rawValue {
@@ -34,14 +33,14 @@ class Deck {
         }
         for _ in 0..<unshuffledDeck.count {
             let randomIndex = Int(arc4random_uniform(UInt32(unshuffledDeck.count)))
-            currentDeck.append(unshuffledDeck[randomIndex])
+            cards.append(unshuffledDeck[randomIndex])
         }
     }
 
     /// Returns an optional first card in the deck
-    func getCard() -> Card? {
-        if currentDeck.count > 0 {
-            return currentDeck.removeFirst()
+    func dealCard() -> Card? {
+        if cards.count > 0 {
+            return cards.removeFirst()
         }
         return nil
     }
