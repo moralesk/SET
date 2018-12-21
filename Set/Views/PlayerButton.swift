@@ -9,8 +9,27 @@
 import Foundation
 import UIKit
 
+/// Functions that affect the game board when a player button is selected
+protocol GameBoardButtonProtocol {
+    func playerSelecting()
+    func playerStoppedSelecting()
+}
+
 /// Button placed around the gameboard used for the players to select their SETs.
 class PlayerButton: UIButton {
+
+    var isSelecting: Bool = false
+    override var isHighlighted: Bool {
+        didSet {
+            if isHighlighted {
+                setToSelectedState()
+            } else {
+                perform(#selector(self.setToDefaultState), with: nil, afterDelay: 3)
+            }
+        }
+    }
+
+    var gameBoardButtonDelegate: GameBoardButtonProtocol?
 
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -21,12 +40,11 @@ class PlayerButton: UIButton {
         backgroundColor = color
         layer.cornerRadius = 3.0
         titleLabel?.font = UIFont.boldSystemFont(ofSize: 20)
-        setTitleColor(.white, for: .normal)
+        setTitleColor(.white, for: UIControlState())
         setTitle("SCORE:", for: .normal)
-        setTitle("SELECTING...", for: .highlighted)
     }
 
-    /// All player buttons will have the same height. Other constraints should be defined with the gameboard.
+    /// All player buttons will have the same height. Other constraints should be defined within the gameboard.
     func addHeightConstraint() {
         self.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint(item: self, attribute: .height, relatedBy: .equal, toItem: superview, attribute: .height, multiplier: 0.08, constant: 0).isActive = true
@@ -34,5 +52,30 @@ class PlayerButton: UIButton {
 
     func updateScore(score: Int) {
         setTitle("SCORE: \(score)", for: .normal)
+    }
+
+    func setState(selected: Bool) {
+        if selected {
+            setToSelectedState()
+        } else {
+            setToDefaultState()
+        }
+    }
+
+    private func setToSelectedState() {
+        setTitle("SELECTING...", for: .normal)
+        backgroundColor = backgroundColor?.withAlphaComponent(0.8)
+        isUserInteractionEnabled = false
+        isSelecting = true
+        gameBoardButtonDelegate?.playerSelecting()
+    }
+
+    @objc private func setToDefaultState() {
+        setTitle("SCORE:", for: .normal)
+        backgroundColor = backgroundColor?.withAlphaComponent(1)
+        isUserInteractionEnabled = true
+        isSelecting = false
+        NSObject.cancelPreviousPerformRequests(withTarget: self)
+        gameBoardButtonDelegate?.playerStoppedSelecting()
     }
 }
