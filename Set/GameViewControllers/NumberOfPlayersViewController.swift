@@ -12,7 +12,7 @@ import UIKit
 /**
  View controller displaying the options for the number of players to play the game
  */
-class NumberOfPlayersViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+class NumberOfPlayersViewController: UIViewController {
 
     /// prompt for selecting number of players
     private let promptLabel = UILabel()
@@ -59,7 +59,7 @@ class NumberOfPlayersViewController: UIViewController, UICollectionViewDataSourc
         promptLabel.translatesAutoresizingMaskIntoConstraints = false
         let centerX = NSLayoutConstraint(item: promptLabel, attribute: NSLayoutAttribute.centerX, relatedBy: NSLayoutRelation.equal, toItem: promptLabel.superview, attribute: NSLayoutAttribute.centerX, multiplier: 1, constant: 0)
         let top = NSLayoutConstraint(item: promptLabel, attribute: NSLayoutAttribute.top, relatedBy: NSLayoutRelation.equal, toItem: promptLabel.superview, attribute: NSLayoutAttribute.topMargin, multiplier: 2, constant: 0)
-        let width = NSLayoutConstraint(item: promptLabel, attribute: NSLayoutAttribute.width, relatedBy: NSLayoutRelation.equal, toItem: promptLabel.superview, attribute: NSLayoutAttribute.width, multiplier: 1, constant: 0)
+        let width = NSLayoutConstraint(item: promptLabel, attribute: NSLayoutAttribute.width, relatedBy: NSLayoutRelation.equal, toItem: promptLabel.superview, attribute: NSLayoutAttribute.width, multiplier: 0.85, constant: 0)
         let height = NSLayoutConstraint(item: promptLabel, attribute: NSLayoutAttribute.height, relatedBy: NSLayoutRelation.equal, toItem: promptLabel.superview, attribute: NSLayoutAttribute.height, multiplier: 0.13, constant: 0)
         NSLayoutConstraint.activate([centerX, top, width, height])
     }
@@ -78,11 +78,12 @@ class NumberOfPlayersViewController: UIViewController, UICollectionViewDataSourc
             playerSelectionView.delegate = self
             playerSelectionView.dataSource = self
             self.view.addSubview(playerSelectionView)
+
             playerSelectionView.translatesAutoresizingMaskIntoConstraints = false
             let centerX = NSLayoutConstraint(item: playerSelectionView, attribute: NSLayoutAttribute.centerX, relatedBy: NSLayoutRelation.equal, toItem: playerSelectionView.superview, attribute: NSLayoutAttribute.centerX, multiplier: 1, constant: 0)
-            let top = NSLayoutConstraint(item: playerSelectionView, attribute: NSLayoutAttribute.top, relatedBy: NSLayoutRelation.equal, toItem: promptLabel, attribute: NSLayoutAttribute.bottomMargin, multiplier: 1, constant: 40)
+            let top = NSLayoutConstraint(item: playerSelectionView, attribute: NSLayoutAttribute.top, relatedBy: NSLayoutRelation.equal, toItem: promptLabel, attribute: NSLayoutAttribute.bottomMargin, multiplier: 1, constant: 20)
             let width = NSLayoutConstraint(item: playerSelectionView, attribute: NSLayoutAttribute.width, relatedBy: NSLayoutRelation.equal, toItem: playerSelectionView.superview, attribute: NSLayoutAttribute.width, multiplier: 0.85, constant: 0)
-            let height = NSLayoutConstraint(item: playerSelectionView, attribute: NSLayoutAttribute.height, relatedBy: NSLayoutRelation.equal, toItem: playerSelectionView.superview, attribute: NSLayoutAttribute.height, multiplier: 0.1, constant: 0)
+            let height = NSLayoutConstraint(item: playerSelectionView, attribute: NSLayoutAttribute.height, relatedBy: NSLayoutRelation.equal, toItem: playerSelectionView.superview, attribute: NSLayoutAttribute.height, multiplier: 0.2, constant: 10)
             NSLayoutConstraint.activate([centerX, top, width, height])
         }
     }
@@ -108,12 +109,23 @@ class NumberOfPlayersViewController: UIViewController, UICollectionViewDataSourc
         }
         continueButton.activateConstraints()
         continueButton.width?.isActive = false
-        NSLayoutConstraint(item: continueButton, attribute: NSLayoutAttribute.top, relatedBy: NSLayoutRelation.equal, toItem: continueButton.superview, attribute: NSLayoutAttribute.bottom, multiplier: 0.6, constant: 0).isActive = true
-        NSLayoutConstraint(item: continueButton, attribute: NSLayoutAttribute.width, relatedBy: NSLayoutRelation.equal, toItem: continueButton.superview, attribute: NSLayoutAttribute.width, multiplier: 0.7, constant: 0).isActive = true
+        NSLayoutConstraint(item: continueButton, attribute: NSLayoutAttribute.top, relatedBy: NSLayoutRelation.equal, toItem: playerSelectionView, attribute: NSLayoutAttribute.bottom, multiplier: 1, constant: 20).isActive = true
+        NSLayoutConstraint(item: continueButton, attribute: NSLayoutAttribute.width, relatedBy: NSLayoutRelation.equal, toItem: continueButton.superview, attribute: NSLayoutAttribute.width, multiplier: 0.85, constant: 0).isActive = true
     }
 
-    // MARK:- UICollectionView
-    // MARK: UICollectionViewDelegate
+    // MARK:- Selectors
+    @objc private func continueAction() {
+        guard let num = numberOfPlayers else {
+            return
+        }
+        let gameBoardVC = GameBoardViewController(numberOfPlayers: num)
+        sharedDeck.shuffle()
+        navigationController?.pushViewController(gameBoardVC, animated: true)
+    }
+}
+
+// MARK: UICollectionViewDelegate
+extension NumberOfPlayersViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         collectionView.deselectItem(at: indexPath, animated: true)
         numberOfPlayers = indexPath.row + 1
@@ -128,9 +140,10 @@ class NumberOfPlayersViewController: UIViewController, UICollectionViewDataSourc
         }
         continueButton.setTitle("Continue With \(numberOfPlayers) Player\(numberOfPlayers > 1 ? "s" : "")", for: UIControlState())
     }
+}
 
-    // MARK: UICollectionViewDataSource
-
+// MARK: UICollectionViewDataSource
+extension NumberOfPlayersViewController: UICollectionViewDataSource {
     // number of sections defaults to 1 without implementation
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return maxNumberOfPlayers
@@ -143,22 +156,15 @@ class NumberOfPlayersViewController: UIViewController, UICollectionViewDataSourc
         cell.initialize(with: "\(indexPath.row + 1)")
         return cell
     }
+}
 
-    // MARK: UICollectionViewDelegateFlowLayout
+// MARK: UICollectionViewDelegateFlowLayout
+extension NumberOfPlayersViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: collectionViewCellWidth, height: collectionViewCellWidth)
     }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
         return spaceBetweenCollectionViewCells
-    }
-
-    // MARK:- Selectors
-    @objc private func continueAction() {
-        guard let num = numberOfPlayers else {
-            return
-        }
-        let gameBoardVC = GameBoardViewController(numberOfPlayers: num)
-        navigationController?.pushViewController(gameBoardVC, animated: true)
     }
 }
