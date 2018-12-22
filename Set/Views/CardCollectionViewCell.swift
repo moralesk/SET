@@ -21,6 +21,13 @@ class CardCollectionViewCell: UICollectionViewCell {
         }
     }
 
+    /// Tracks whether the cell is part of the current SET being chosen.
+    var isChosen: Bool = false {
+        didSet {
+            isUserInteractionEnabled = !isChosen
+        }
+    }
+
     // MARK: Lifecycle Methods
     override init(frame: CGRect) {
         super.init(frame: frame)
