@@ -10,13 +10,14 @@ import Foundation
 import UIKit
 
 /// Where the game is played. Initialized with a number of players to determine if and how many buttons are added around the gameboard.
-class GameBoardViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+class GameBoardViewController: UIViewController {
 
     private var numberOfPlayers: Int?
     private var playerButtons: [PlayerButton] = []
     private lazy var singlePlayerScoreLabel: UILabel = UILabel()
 
     private var gameBoard: UICollectionView?
+
     private var collectionViewCellWidth: CGFloat {
         get {
             return self.view.bounds.width * 0.22
@@ -24,7 +25,7 @@ class GameBoardViewController: UIViewController, UICollectionViewDataSource, UIC
     }
     private var collectionViewCellHeight: CGFloat {
         get {
-            return self.view.bounds.height * 0.14
+            return self.view.bounds.height * 0.13
         }
     }
     private var spaceBetweenCollectionViewCells: CGFloat {
@@ -38,9 +39,19 @@ class GameBoardViewController: UIViewController, UICollectionViewDataSource, UIC
         }
     }
 
-    private let currentDeck = Deck()
+    private var currentSet: [CardCollectionViewCell] = []
 
-    // MARK: Lifecycle Methods
+    /// Determines if the cards can be selected
+    private var cardSelectionEnabled: Bool = false {
+        didSet{
+            gameBoard?.isUserInteractionEnabled = cardSelectionEnabled
+            if !cardSelectionEnabled {
+                currentSet.removeAll()
+            }
+        }
+    }
+
+    // MARK:- Lifecycle Methods
     init(numberOfPlayers: Int) {
         super.init(nibName: nil, bundle: nil)
         self.numberOfPlayers = numberOfPlayers
@@ -71,6 +82,7 @@ class GameBoardViewController: UIViewController, UICollectionViewDataSource, UIC
         if numberOfPlayers > 1 {
             for i in 1...numberOfPlayers {
                 let button = drawButtonForPlayer(num: i)
+                button.gameBoardButtonDelegate = self
                 playerButtons.append(button)
             }
         } else {
@@ -162,12 +174,15 @@ class GameBoardViewController: UIViewController, UICollectionViewDataSource, UIC
             gameBoard.delegate = self
             gameBoard.dataSource = self
             self.view.addSubview(gameBoard)
+
             gameBoard.translatesAutoresizingMaskIntoConstraints = false
             NSLayoutConstraint(item: gameBoard, attribute: NSLayoutAttribute.centerX, relatedBy: NSLayoutRelation.equal, toItem: gameBoard.superview, attribute: NSLayoutAttribute.centerX, multiplier: 1, constant: 0).isActive = true
             NSLayoutConstraint(item: gameBoard, attribute: NSLayoutAttribute.width, relatedBy: NSLayoutRelation.equal, toItem: gameBoard.superview, attribute: NSLayoutAttribute.width, multiplier: 0.9, constant: 0).isActive = true
             if playerButtons.count > 1 {
-                NSLayoutConstraint(item: gameBoard, attribute: NSLayoutAttribute.top, relatedBy: NSLayoutRelation.equal, toItem: gameBoard.superview, attribute: NSLayoutAttribute.topMargin, multiplier: 2.1, constant: 0).isActive = true
-                NSLayoutConstraint(item: gameBoard, attribute: NSLayoutAttribute.bottom, relatedBy: NSLayoutRelation.equal, toItem: gameBoard.superview, attribute: NSLayoutAttribute.bottomMargin, multiplier: 0.88, constant: 0).isActive = true
+                let bottomPlayerButton = playerButtons[0]
+                let topPlayerButton = playerButtons[1]
+                NSLayoutConstraint(item: gameBoard, attribute: NSLayoutAttribute.top, relatedBy: NSLayoutRelation.equal, toItem: topPlayerButton, attribute: NSLayoutAttribute.bottomMargin, multiplier: 1, constant: 10).isActive = true
+                NSLayoutConstraint(item: gameBoard, attribute: NSLayoutAttribute.bottom, relatedBy: NSLayoutRelation.equal, toItem: bottomPlayerButton, attribute: NSLayoutAttribute.topMargin, multiplier: 1, constant: -10).isActive = true
             } else {
                 NSLayoutConstraint(item: gameBoard, attribute: NSLayoutAttribute.top, relatedBy: NSLayoutRelation.equal, toItem: gameBoard.superview, attribute: NSLayoutAttribute.topMargin, multiplier: 1, constant: 0).isActive = true
                 NSLayoutConstraint(item: gameBoard, attribute: NSLayoutAttribute.bottom, relatedBy: NSLayoutRelation.equal, toItem: singlePlayerScoreLabel, attribute: NSLayoutAttribute.top, multiplier: 1, constant: 0).isActive = true
@@ -175,8 +190,19 @@ class GameBoardViewController: UIViewController, UICollectionViewDataSource, UIC
         }
     }
 
-    // MARK: UICollectionViewDataSource
+    // MARK:- UIBarButton BackAction
+    @objc func backAction() {
+        let alert = UIAlertController(title: "Are You Sure You Want To Exit?", message: "All data from the current game will be lost.", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Exit", style: .default, handler: { (action) -> Void in
+            self.navigationController?.popViewController(animated: true)
+        }))
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        self.present(alert, animated: true)
+    }
+}
 
+// MARK:- UICollectionViewDataSource
+extension GameBoardViewController: UICollectionViewDataSource {
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 4
     }
@@ -190,13 +216,30 @@ class GameBoardViewController: UIViewController, UICollectionViewDataSource, UIC
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CardCollectionViewCell.reuseID(), for: indexPath) as? CardCollectionViewCell else {
             return UICollectionViewCell()
         }
-        if let card = currentDeck.getCard() {
+        if let card = sharedDeck.dealCard() {
             cell.card = card
         }
         return cell
     }
 
-    // MARK: UICollectionViewDelegateFlowLayout
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        guard let cell = collectionView.cellForItem(at: indexPath) as? CardCollectionViewCell else {
+            return
+        }
+        cell.isChosen = true
+        currentSet.append(cell)
+        if currentSet.count == 3 {
+            for button in playerButtons {
+                if button.isSelecting {
+                    button.setState(selected: false)
+                }
+            }
+        }
+    }
+}
+
+// MARK:- UICollectionViewDelegateFlowLayout
+extension GameBoardViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: collectionViewCellWidth, height: collectionViewCellHeight)
     }
@@ -204,14 +247,26 @@ class GameBoardViewController: UIViewController, UICollectionViewDataSource, UIC
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
         return spaceBetweenCollectionViewCells
     }
+}
 
-    // UIBarButton BackAction
-    @objc func backAction() {
-        let alert = UIAlertController(title: "Are You Sure You Want To Exit?", message: "All data from the current game will be lost.", preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "Exit", style: .default, handler: { (action) -> Void in
-            self.navigationController?.popViewController(animated: true)
-        }))
-        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
-        self.present(alert, animated: true)
+// MARK:- GameBoardButtonProtocol
+extension GameBoardViewController: GameBoardButtonProtocol {
+    func playerSelecting() {
+        for button in playerButtons {
+            button.isUserInteractionEnabled = false
+        }
+        cardSelectionEnabled = true
+        self.navigationItem.leftBarButtonItem?.isEnabled = false
+    }
+
+    func playerStoppedSelecting() {
+        for button in playerButtons {
+            button.isUserInteractionEnabled = true
+        }
+        for cardCell in currentSet {
+            cardCell.isChosen = false
+        }
+        cardSelectionEnabled = false
+        self.navigationItem.leftBarButtonItem?.isEnabled = true
     }
 }
