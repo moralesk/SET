@@ -30,6 +30,7 @@ class PlayerButton: UIButton {
     }
 
     var gameBoardButtonDelegate: GameBoardButtonProtocol?
+    private var playerScore: Int = 0
 
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -41,7 +42,7 @@ class PlayerButton: UIButton {
         layer.cornerRadius = 3.0
         titleLabel?.font = UIFont.boldSystemFont(ofSize: 20)
         setTitleColor(.white, for: UIControlState())
-        setTitle("SCORE:", for: .normal)
+        setTitle("SCORE: \(playerScore)", for: .normal)
     }
 
     /// All player buttons will have the same height. Other constraints should be defined within the gameboard.
@@ -50,8 +51,8 @@ class PlayerButton: UIButton {
         NSLayoutConstraint(item: self, attribute: .height, relatedBy: .equal, toItem: superview, attribute: .height, multiplier: 0.08, constant: 0).isActive = true
     }
 
-    func updateScore(score: Int) {
-        setTitle("SCORE: \(score)", for: .normal)
+    func updateScore() {
+        playerScore += 1
     }
 
     func setState(selected: Bool) {
@@ -71,7 +72,7 @@ class PlayerButton: UIButton {
     }
 
     @objc private func setToDefaultState() {
-        setTitle("SCORE:", for: .normal)
+        setTitle("SCORE: \(playerScore)", for: .normal)
         backgroundColor = backgroundColor?.withAlphaComponent(1)
         isUserInteractionEnabled = true
         isSelecting = false
