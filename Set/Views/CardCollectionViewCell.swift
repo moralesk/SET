@@ -15,18 +15,27 @@ class CardCollectionViewCell: UICollectionViewCell {
     var card: Card? {
         didSet {
             if card != nil {
-                setColor()
+                // TODO: remove when assets are available
                 addDescriptionView()
+                setColor()
             }
         }
     }
 
-    /// Tracks whether the cell is part of the current SET being chosen.
+    /// Tracks whether the cell is part of the current SET being chosen
     var isChosen: Bool = false {
         didSet {
             isUserInteractionEnabled = !isChosen
+            if isChosen {
+                backgroundColor = .purple
+            } else {
+                backgroundColor = descriptionView?.backgroundColor
+            }
         }
     }
+
+    /// Container view for description labels when assets aren't found
+    var descriptionView: UIView?
 
     // MARK: Lifecycle Methods
     override init(frame: CGRect) {
@@ -45,19 +54,34 @@ class CardCollectionViewCell: UICollectionViewCell {
     private func setColor() {
         if let card = card {
             switch card.color {
-            case .red: backgroundColor = .red
-            case .black: backgroundColor = .black
-            case .blue: backgroundColor = .blue
-            default: backgroundColor = .purple
+            case .red: descriptionView?.backgroundColor = .red
+            case .black: descriptionView?.backgroundColor = .black
+            case .blue: descriptionView?.backgroundColor = .blue
+            default: descriptionView?.backgroundColor = .purple
             }
+            backgroundColor = descriptionView?.backgroundColor
         }
     }
 
     // TODO: Update with assets
+    /// Adds container view with labels while assets are unavailable
     private func addDescriptionView() {
         guard let card = card else {
             return
         }
+        descriptionView = UIView()
+        guard let descriptionView = descriptionView else {
+            return
+        }
+        if descriptionView.superview == nil {
+            self.contentView.addSubview(descriptionView)
+            descriptionView.translatesAutoresizingMaskIntoConstraints = false
+            NSLayoutConstraint(item: descriptionView, attribute: .top, relatedBy: .equal, toItem: descriptionView.superview, attribute: .top, multiplier: 1, constant: 2).isActive = true
+            NSLayoutConstraint(item: descriptionView, attribute: .left, relatedBy: .equal, toItem: descriptionView.superview, attribute: .left, multiplier: 1, constant: 2).isActive = true
+            NSLayoutConstraint(item: descriptionView, attribute: .right, relatedBy: .equal, toItem: descriptionView.superview, attribute: .right, multiplier: 1, constant: -2).isActive = true
+            NSLayoutConstraint(item: descriptionView, attribute: .bottom, relatedBy: .equal, toItem: descriptionView.superview, attribute: .bottom, multiplier: 1, constant: -2).isActive = true
+        }
+
         let shape = String.init(describing: card.shape)
         let fill = String.init(describing: card.fill)
         let count = String.init(describing: card.count)
@@ -71,7 +95,7 @@ class CardCollectionViewCell: UICollectionViewCell {
         shapeLabel.numberOfLines = 1
         shapeLabel.lineBreakMode = .byTruncatingMiddle
         if shapeLabel.superview == nil {
-            self.contentView.addSubview(shapeLabel)
+            descriptionView.addSubview(shapeLabel)
             shapeLabel.translatesAutoresizingMaskIntoConstraints = false
             NSLayoutConstraint(item: shapeLabel, attribute: .top, relatedBy: .equal, toItem: shapeLabel.superview, attribute: .top, multiplier: 1, constant: 0).isActive = true
             NSLayoutConstraint(item: shapeLabel, attribute: .width, relatedBy: .equal, toItem: shapeLabel.superview, attribute: .width, multiplier: 0.95, constant: 0).isActive = true
@@ -86,7 +110,7 @@ class CardCollectionViewCell: UICollectionViewCell {
         fillLabel.numberOfLines = 1
         fillLabel.lineBreakMode = .byTruncatingMiddle
         if fillLabel.superview == nil {
-            self.contentView.addSubview(fillLabel)
+            descriptionView.addSubview(fillLabel)
             fillLabel.translatesAutoresizingMaskIntoConstraints = false
             NSLayoutConstraint(item: fillLabel, attribute: .centerY, relatedBy: .equal, toItem: fillLabel.superview, attribute: .bottom, multiplier: 0.5, constant: 0).isActive = true
             NSLayoutConstraint(item: fillLabel, attribute: .width, relatedBy: .equal, toItem: fillLabel.superview, attribute: .width, multiplier: 0.95, constant: 0).isActive = true
@@ -101,7 +125,7 @@ class CardCollectionViewCell: UICollectionViewCell {
         countLabel.numberOfLines = 1
         countLabel.lineBreakMode = .byTruncatingMiddle
         if countLabel.superview == nil {
-            self.contentView.addSubview(countLabel)
+            descriptionView.addSubview(countLabel)
             countLabel.translatesAutoresizingMaskIntoConstraints = false
             NSLayoutConstraint(item: countLabel, attribute: .width, relatedBy: .equal, toItem: countLabel.superview, attribute: .width, multiplier: 0.95, constant: 0).isActive = true
             NSLayoutConstraint(item: countLabel, attribute: .centerX, relatedBy: .equal, toItem: countLabel.superview, attribute: .centerX, multiplier: 1, constant: 0).isActive = true
