@@ -92,8 +92,8 @@ class CardCollectionViewCell: UICollectionViewCell {
         shapeLabel.font = labelFont
         shapeLabel.textColor = .white
         shapeLabel.textAlignment = .center
-        shapeLabel.numberOfLines = 1
-        shapeLabel.lineBreakMode = .byTruncatingMiddle
+        shapeLabel.numberOfLines = 0
+        shapeLabel.lineBreakMode = .byWordWrapping
         if shapeLabel.superview == nil {
             descriptionView.addSubview(shapeLabel)
             shapeLabel.translatesAutoresizingMaskIntoConstraints = false
