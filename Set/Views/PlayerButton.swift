@@ -51,7 +51,7 @@ class PlayerButton: UIButton {
         NSLayoutConstraint(item: self, attribute: .height, relatedBy: .equal, toItem: superview, attribute: .height, multiplier: 0.08, constant: 0).isActive = true
     }
 
-    func updateScore() {
+    func incrementScore() {
         playerScore += 1
     }
 

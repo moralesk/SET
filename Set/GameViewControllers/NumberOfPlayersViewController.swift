@@ -124,7 +124,7 @@ class NumberOfPlayersViewController: UIViewController {
     }
 }
 
-// MARK: UICollectionViewDelegate
+// MARK:- UICollectionViewDelegate
 extension NumberOfPlayersViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         collectionView.deselectItem(at: indexPath, animated: true)
@@ -142,7 +142,7 @@ extension NumberOfPlayersViewController: UICollectionViewDelegate {
     }
 }
 
-// MARK: UICollectionViewDataSource
+// MARK:- UICollectionViewDataSource
 extension NumberOfPlayersViewController: UICollectionViewDataSource {
     // number of sections defaults to 1 without implementation
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -158,7 +158,7 @@ extension NumberOfPlayersViewController: UICollectionViewDataSource {
     }
 }
 
-// MARK: UICollectionViewDelegateFlowLayout
+// MARK:- UICollectionViewDelegateFlowLayout
 extension NumberOfPlayersViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: collectionViewCellWidth, height: collectionViewCellWidth)

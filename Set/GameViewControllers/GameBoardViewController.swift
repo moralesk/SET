@@ -174,6 +174,7 @@ class GameBoardViewController: UIViewController {
             gameBoard.delegate = self
             gameBoard.dataSource = self
             self.view.addSubview(gameBoard)
+            gameBoard.isUserInteractionEnabled = false
 
             gameBoard.translatesAutoresizingMaskIntoConstraints = false
             NSLayoutConstraint(item: gameBoard, attribute: NSLayoutAttribute.centerX, relatedBy: NSLayoutRelation.equal, toItem: gameBoard.superview, attribute: NSLayoutAttribute.centerX, multiplier: 1, constant: 0).isActive = true
@@ -229,8 +230,15 @@ extension GameBoardViewController: UICollectionViewDataSource {
         cell.isChosen = true
         currentSet.append(cell)
         if currentSet.count == 3 {
+            guard let card1 = currentSet[0].card, let card2 = currentSet[1].card, let card3 = currentSet[2].card else {
+                return
+            }
+            let set = Set(cards: [card1, card2, card3])
             for button in playerButtons {
                 if button.isSelecting {
+                    if set.isSet() {
+                        button.incrementScore()
+                    }
                     button.setState(selected: false)
                 }
             }
@@ -251,6 +259,9 @@ extension GameBoardViewController: UICollectionViewDelegateFlowLayout {
 
 // MARK:- GameBoardButtonProtocol
 extension GameBoardViewController: GameBoardButtonProtocol {
+    /**
+     When a player button is pressed: disable all player buttons, enable card selection, and disable the exit button.
+     */
     func playerSelecting() {
         for button in playerButtons {
             button.isUserInteractionEnabled = false
@@ -259,6 +270,9 @@ extension GameBoardViewController: GameBoardButtonProtocol {
         self.navigationItem.leftBarButtonItem?.isEnabled = false
     }
 
+    /**
+     When a player's turn is over: enable all player buttons, unselect cards and disable card selection, enable the exit button.
+     */
     func playerStoppedSelecting() {
         for button in playerButtons {
             button.isUserInteractionEnabled = true
