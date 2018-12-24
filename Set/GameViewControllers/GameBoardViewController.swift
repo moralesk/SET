@@ -46,7 +46,7 @@ class GameBoardViewController: UIViewController {
         didSet{
             gameBoard?.isUserInteractionEnabled = cardSelectionEnabled
             if !cardSelectionEnabled {
-                currentSet.removeAll()
+                resetCurrentSet()
             }
         }
     }
@@ -174,7 +174,9 @@ class GameBoardViewController: UIViewController {
             gameBoard.delegate = self
             gameBoard.dataSource = self
             self.view.addSubview(gameBoard)
-            gameBoard.isUserInteractionEnabled = false
+            if numberOfPlayers != 1 {
+                gameBoard.isUserInteractionEnabled = false
+            }
 
             gameBoard.translatesAutoresizingMaskIntoConstraints = false
             NSLayoutConstraint(item: gameBoard, attribute: NSLayoutAttribute.centerX, relatedBy: NSLayoutRelation.equal, toItem: gameBoard.superview, attribute: NSLayoutAttribute.centerX, multiplier: 1, constant: 0).isActive = true
@@ -189,6 +191,14 @@ class GameBoardViewController: UIViewController {
                 NSLayoutConstraint(item: gameBoard, attribute: NSLayoutAttribute.bottom, relatedBy: NSLayoutRelation.equal, toItem: singlePlayerScoreLabel, attribute: NSLayoutAttribute.top, multiplier: 1, constant: 0).isActive = true
             }
         }
+    }
+
+    // MARK:- Helpers
+    private func resetCurrentSet() {
+        for cardCell in currentSet {
+            cardCell.isChosen = false
+        }
+        currentSet.removeAll()
     }
 
     // MARK:- UIBarButton BackAction
@@ -234,13 +244,17 @@ extension GameBoardViewController: UICollectionViewDataSource {
                 return
             }
             let set = Set(cards: [card1, card2, card3])
-            for button in playerButtons {
-                if button.isSelecting {
-                    if set.isSet() {
-                        button.incrementScore()
+            if numberOfPlayers != 1 {
+                for button in playerButtons {
+                    if button.isSelecting {
+                        if set.isSet() {
+                            button.incrementScore()
+                        }
+                        button.setState(selected: false)
                     }
-                    button.setState(selected: false)
                 }
+            } else {
+                resetCurrentSet()
             }
         }
     }
@@ -276,9 +290,6 @@ extension GameBoardViewController: GameBoardButtonProtocol {
     func playerStoppedSelecting() {
         for button in playerButtons {
             button.isUserInteractionEnabled = true
-        }
-        for cardCell in currentSet {
-            cardCell.isChosen = false
         }
         cardSelectionEnabled = false
         self.navigationItem.leftBarButtonItem?.isEnabled = true
