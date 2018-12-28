@@ -49,3 +49,18 @@ class Card {
         self.count = count
     }
 }
+
+extension Card: Equatable {
+    static func == (lhs: Card, rhs: Card) -> Bool {
+        return lhs.color == rhs.color
+            && lhs.shape == rhs.shape
+            && lhs.fill == rhs.fill
+            && lhs.count == rhs.count
+    }
+}
+
+extension Card: CustomStringConvertible {
+    var description: String {
+        return "Card: \(count) \(color) \(fill) \(shape)\n"
+    }
+}

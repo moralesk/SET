@@ -144,7 +144,6 @@ extension NumberOfPlayersViewController: UICollectionViewDelegate {
 
 // MARK:- UICollectionViewDataSource
 extension NumberOfPlayersViewController: UICollectionViewDataSource {
-    // number of sections defaults to 1 without implementation
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return maxNumberOfPlayers
     }
