@@ -10,22 +10,22 @@ import XCTest
 
 class SetExistsTests: XCTestCase {
 
-    var setFinderDelegate: TestSetFinderDelegate?
+    var setValidationDelegate: TestSetValidationDelegate?
 
     override func setUp() {
         // Put setup code here. This method is called before the invocation of each test method in the class.
-        setFinderDelegate = TestSetFinderDelegate()
+        setValidationDelegate = TestSetValidationDelegate()
     }
 
     override func tearDown() {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
-        setFinderDelegate = nil
+        setValidationDelegate = nil
     }
 
     func testNotEnoughCards() {
         let card = Card(with: .black, shape: .circle, fill: .empty, count: .one)
 
-        guard let delegate = setFinderDelegate else {
+        guard let delegate = setValidationDelegate else {
             return
         }
 
@@ -38,7 +38,7 @@ class SetExistsTests: XCTestCase {
         let card2 = Card(with: .black, shape: .circle, fill: .empty, count: .two)
         let card3 = Card(with: .black, shape: .circle, fill: .empty, count: .three)
 
-        guard let delegate = setFinderDelegate else {
+        guard let delegate = setValidationDelegate else {
             return
         }
 
@@ -51,7 +51,7 @@ class SetExistsTests: XCTestCase {
         let card2 = Card(with: .black, shape: .circle, fill: .empty, count: .two)
         let card3 = Card(with: .black, shape: .circle, fill: .empty, count: .two)
 
-        guard let delegate = setFinderDelegate else {
+        guard let delegate = setValidationDelegate else {
             return
         }
 
@@ -73,7 +73,7 @@ class SetExistsTests: XCTestCase {
         let card11 = Card(with: .blue, shape: .triangle, fill: .striped, count: .two)
         let card12 = Card(with: .blue, shape: .triangle, fill: .empty, count: .three)
 
-        guard let delegate = setFinderDelegate else {
+        guard let delegate = setValidationDelegate else {
             return
         }
 
@@ -95,7 +95,7 @@ class SetExistsTests: XCTestCase {
         let card11 = Card(with: .black, shape: .square, fill: .empty, count: .three)
         let card12 = Card(with: .red, shape: .triangle, fill: .striped, count: .two)
 
-        guard let delegate = setFinderDelegate else {
+        guard let delegate = setValidationDelegate else {
             return
         }
 

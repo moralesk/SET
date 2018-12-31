@@ -1,5 +1,5 @@
 //
-//  SetFinderProtocol.swift
+//  SETValidationProtocol.swift
 //  Set
 //
 //  Created by Kelly Morales on 12/26/18.
@@ -8,7 +8,8 @@
 
 import Foundation
 
-protocol SetFinderProtocol {
+/// Protocol containing logic for validating SETs
+protocol SETValidationProtocol {
     /// Determines if a set exists within a given list of Cards
     func setExists(in cards: [Card]) -> Bool
 
@@ -16,7 +17,7 @@ protocol SetFinderProtocol {
     func isSet(_ cards: [Card]) -> Bool
 }
 
-extension SetFinderProtocol {
+extension SETValidationProtocol {
     func setExists(in cards: [Card]) -> Bool {
         if cards.count < 3 {
             return false

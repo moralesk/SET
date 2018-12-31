@@ -8,28 +8,28 @@
 
 import XCTest
 
-class TestSetFinderDelegate: SetFinderProtocol {
+class TestSetValidationDelegate: SETValidationProtocol {
 }
 
 class SetTests: XCTestCase {
 
-    var setFinderDelegate: TestSetFinderDelegate?
+    var setValidationDelegate: TestSetValidationDelegate?
 
     override func setUp() {
         // Put setup code here. This method is called before the invocation of each test method in the class.
-        setFinderDelegate = TestSetFinderDelegate()
+        setValidationDelegate = TestSetValidationDelegate()
     }
 
     override func tearDown() {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
-        setFinderDelegate = nil
+        setValidationDelegate = nil
     }
 
     func testOnlyColorsAreEqual() {
         let card1 = Card(with: Card.Color.red, shape: Card.Shape.square, fill: Card.Fill.empty, count: Card.Count.one)
         let card2 = Card(with: Card.Color.red, shape: Card.Shape.circle, fill: Card.Fill.filled, count: Card.Count.two)
         let card3 = Card(with: Card.Color.red, shape: Card.Shape.triangle, fill: Card.Fill.striped, count: Card.Count.three)
-        guard let delegate = setFinderDelegate else {
+        guard let delegate = setValidationDelegate else {
             return
         }
         let result = delegate.isSet([card1, card2, card3])
@@ -40,7 +40,7 @@ class SetTests: XCTestCase {
         let card1 = Card(with: Card.Color.red, shape: Card.Shape.square, fill: Card.Fill.empty, count: Card.Count.one)
         let card2 = Card(with: Card.Color.black, shape: Card.Shape.square, fill: Card.Fill.filled, count: Card.Count.two)
         let card3 = Card(with: Card.Color.blue, shape: Card.Shape.square, fill: Card.Fill.striped, count: Card.Count.three)
-        guard let delegate = setFinderDelegate else {
+        guard let delegate = setValidationDelegate else {
             return
         }
         let result = delegate.isSet([card1, card2, card3])
@@ -51,7 +51,7 @@ class SetTests: XCTestCase {
         let card1 = Card(with: Card.Color.red, shape: Card.Shape.square, fill: Card.Fill.empty, count: Card.Count.one)
         let card2 = Card(with: Card.Color.black, shape: Card.Shape.circle, fill: Card.Fill.empty, count: Card.Count.two)
         let card3 = Card(with: Card.Color.blue, shape: Card.Shape.triangle, fill: Card.Fill.empty, count: Card.Count.three)
-        guard let delegate = setFinderDelegate else {
+        guard let delegate = setValidationDelegate else {
             return
         }
         let result = delegate.isSet([card1, card2, card3])
@@ -62,7 +62,7 @@ class SetTests: XCTestCase {
         let card1 = Card(with: Card.Color.red, shape: Card.Shape.square, fill: Card.Fill.empty, count: Card.Count.one)
         let card2 = Card(with: Card.Color.black, shape: Card.Shape.circle, fill: Card.Fill.filled, count: Card.Count.one)
         let card3 = Card(with: Card.Color.blue, shape: Card.Shape.triangle, fill: Card.Fill.striped, count: Card.Count.one)
-        guard let delegate = setFinderDelegate else {
+        guard let delegate = setValidationDelegate else {
             return
         }
         let result = delegate.isSet([card1, card2, card3])
@@ -73,7 +73,7 @@ class SetTests: XCTestCase {
         let card1 = Card(with: Card.Color.red, shape: Card.Shape.circle, fill: Card.Fill.filled, count: Card.Count.two)
         let card2 = Card(with: Card.Color.black, shape: Card.Shape.circle, fill: Card.Fill.filled, count: Card.Count.two)
         let card3 = Card(with: Card.Color.blue, shape: Card.Shape.circle, fill: Card.Fill.filled, count: Card.Count.two)
-        guard let delegate = setFinderDelegate else {
+        guard let delegate = setValidationDelegate else {
             return
         }
         let result = delegate.isSet([card1, card2, card3])
@@ -84,7 +84,7 @@ class SetTests: XCTestCase {
         let card1 = Card(with: Card.Color.black, shape: Card.Shape.circle, fill: Card.Fill.filled, count: Card.Count.two)
         let card2 = Card(with: Card.Color.black, shape: Card.Shape.square, fill: Card.Fill.filled, count: Card.Count.two)
         let card3 = Card(with: Card.Color.black, shape: Card.Shape.triangle, fill: Card.Fill.filled, count: Card.Count.two)
-        guard let delegate = setFinderDelegate else {
+        guard let delegate = setValidationDelegate else {
             return
         }
         let result = delegate.isSet([card1, card2, card3])
@@ -95,7 +95,7 @@ class SetTests: XCTestCase {
         let card1 = Card(with: Card.Color.black, shape: Card.Shape.circle, fill: Card.Fill.filled, count: Card.Count.two)
         let card2 = Card(with: Card.Color.black, shape: Card.Shape.circle, fill: Card.Fill.empty, count: Card.Count.two)
         let card3 = Card(with: Card.Color.black, shape: Card.Shape.circle, fill: Card.Fill.striped, count: Card.Count.two)
-        guard let delegate = setFinderDelegate else {
+        guard let delegate = setValidationDelegate else {
             return
         }
         let result = delegate.isSet([card1, card2, card3])
@@ -106,7 +106,7 @@ class SetTests: XCTestCase {
         let card1 = Card(with: Card.Color.black, shape: Card.Shape.circle, fill: Card.Fill.filled, count: Card.Count.one)
         let card2 = Card(with: Card.Color.black, shape: Card.Shape.circle, fill: Card.Fill.filled, count: Card.Count.two)
         let card3 = Card(with: Card.Color.black, shape: Card.Shape.circle, fill: Card.Fill.filled, count: Card.Count.three)
-        guard let delegate = setFinderDelegate else {
+        guard let delegate = setValidationDelegate else {
             return
         }
         let result = delegate.isSet([card1, card2, card3])
@@ -117,7 +117,7 @@ class SetTests: XCTestCase {
         let card1 = Card(with: Card.Color.red, shape: Card.Shape.circle, fill: Card.Fill.empty, count: Card.Count.two)
         let card2 = Card(with: Card.Color.black, shape: Card.Shape.circle, fill: Card.Fill.empty, count: Card.Count.two)
         let card3 = Card(with: Card.Color.black, shape: Card.Shape.circle, fill: Card.Fill.empty, count: Card.Count.two)
-        guard let delegate = setFinderDelegate else {
+        guard let delegate = setValidationDelegate else {
             return
         }
         let result = delegate.isSet([card1, card2, card3])
@@ -128,7 +128,7 @@ class SetTests: XCTestCase {
         let card1 = Card(with: Card.Color.black, shape: Card.Shape.circle, fill: Card.Fill.empty, count: Card.Count.two)
         let card2 = Card(with: Card.Color.black, shape: Card.Shape.square, fill: Card.Fill.empty, count: Card.Count.two)
         let card3 = Card(with: Card.Color.black, shape: Card.Shape.circle, fill: Card.Fill.empty, count: Card.Count.two)
-        guard let delegate = setFinderDelegate else {
+        guard let delegate = setValidationDelegate else {
             return
         }
         let result = delegate.isSet([card1, card2, card3])
@@ -139,7 +139,7 @@ class SetTests: XCTestCase {
         let card1 = Card(with: Card.Color.black, shape: Card.Shape.circle, fill: Card.Fill.empty, count: Card.Count.two)
         let card2 = Card(with: Card.Color.black, shape: Card.Shape.circle, fill: Card.Fill.empty, count: Card.Count.two)
         let card3 = Card(with: Card.Color.black, shape: Card.Shape.circle, fill: Card.Fill.striped, count: Card.Count.two)
-        guard let delegate = setFinderDelegate else {
+        guard let delegate = setValidationDelegate else {
             return
         }
         let result = delegate.isSet([card1, card2, card3])
@@ -150,7 +150,7 @@ class SetTests: XCTestCase {
         let card1 = Card(with: Card.Color.black, shape: Card.Shape.circle, fill: Card.Fill.empty, count: Card.Count.two)
         let card2 = Card(with: Card.Color.black, shape: Card.Shape.circle, fill: Card.Fill.empty, count: Card.Count.two)
         let card3 = Card(with: Card.Color.black, shape: Card.Shape.circle, fill: Card.Fill.empty, count: Card.Count.one)
-        guard let delegate = setFinderDelegate else {
+        guard let delegate = setValidationDelegate else {
             return
         }
         let result = delegate.isSet([card1, card2, card3])
@@ -161,7 +161,7 @@ class SetTests: XCTestCase {
         let card1 = Card(with: Card.Color.red, shape: Card.Shape.circle, fill: Card.Fill.empty, count: Card.Count.two)
         let card2 = Card(with: Card.Color.black, shape: Card.Shape.square, fill: Card.Fill.empty, count: Card.Count.two)
         let card3 = Card(with: Card.Color.black, shape: Card.Shape.circle, fill: Card.Fill.empty, count: Card.Count.two)
-        guard let delegate = setFinderDelegate else {
+        guard let delegate = setValidationDelegate else {
             return
         }
         let result = delegate.isSet([card1, card2, card3])
@@ -172,7 +172,7 @@ class SetTests: XCTestCase {
         let card1 = Card(with: Card.Color.red, shape: Card.Shape.circle, fill: Card.Fill.striped, count: Card.Count.two)
         let card2 = Card(with: Card.Color.black, shape: Card.Shape.circle, fill: Card.Fill.empty, count: Card.Count.two)
         let card3 = Card(with: Card.Color.black, shape: Card.Shape.circle, fill: Card.Fill.empty, count: Card.Count.two)
-        guard let delegate = setFinderDelegate else {
+        guard let delegate = setValidationDelegate else {
             return
         }
         let result = delegate.isSet([card1, card2, card3])
@@ -183,7 +183,7 @@ class SetTests: XCTestCase {
         let card1 = Card(with: Card.Color.red, shape: Card.Shape.circle, fill: Card.Fill.empty, count: Card.Count.two)
         let card2 = Card(with: Card.Color.black, shape: Card.Shape.circle, fill: Card.Fill.empty, count: Card.Count.two)
         let card3 = Card(with: Card.Color.black, shape: Card.Shape.circle, fill: Card.Fill.empty, count: Card.Count.three)
-        guard let delegate = setFinderDelegate else {
+        guard let delegate = setValidationDelegate else {
             return
         }
         let result = delegate.isSet([card1, card2, card3])
@@ -194,7 +194,7 @@ class SetTests: XCTestCase {
         let card1 = Card(with: Card.Color.black, shape: Card.Shape.circle, fill: Card.Fill.striped, count: Card.Count.two)
         let card2 = Card(with: Card.Color.black, shape: Card.Shape.circle, fill: Card.Fill.empty, count: Card.Count.two)
         let card3 = Card(with: Card.Color.black, shape: Card.Shape.triangle, fill: Card.Fill.empty, count: Card.Count.two)
-        guard let delegate = setFinderDelegate else {
+        guard let delegate = setValidationDelegate else {
             return
         }
         let result = delegate.isSet([card1, card2, card3])
@@ -205,7 +205,7 @@ class SetTests: XCTestCase {
         let card1 = Card(with: Card.Color.black, shape: Card.Shape.circle, fill: Card.Fill.empty, count: Card.Count.two)
         let card2 = Card(with: Card.Color.black, shape: Card.Shape.circle, fill: Card.Fill.empty, count: Card.Count.three)
         let card3 = Card(with: Card.Color.black, shape: Card.Shape.triangle, fill: Card.Fill.empty, count: Card.Count.two)
-        guard let delegate = setFinderDelegate else {
+        guard let delegate = setValidationDelegate else {
             return
         }
         let result = delegate.isSet([card1, card2, card3])
@@ -216,7 +216,7 @@ class SetTests: XCTestCase {
         let card1 = Card(with: Card.Color.black, shape: Card.Shape.circle, fill: Card.Fill.empty, count: Card.Count.two)
         let card2 = Card(with: Card.Color.black, shape: Card.Shape.circle, fill: Card.Fill.filled, count: Card.Count.three)
         let card3 = Card(with: Card.Color.black, shape: Card.Shape.circle, fill: Card.Fill.empty, count: Card.Count.two)
-        guard let delegate = setFinderDelegate else {
+        guard let delegate = setValidationDelegate else {
             return
         }
         let result = delegate.isSet([card1, card2, card3])
@@ -227,7 +227,7 @@ class SetTests: XCTestCase {
         let card1 = Card(with: Card.Color.black, shape: Card.Shape.circle, fill: Card.Fill.filled, count: Card.Count.two)
         let card2 = Card(with: Card.Color.blue, shape: Card.Shape.square, fill: Card.Fill.filled, count: Card.Count.two)
         let card3 = Card(with: Card.Color.red, shape: Card.Shape.triangle, fill: Card.Fill.filled, count: Card.Count.two)
-        guard let delegate = setFinderDelegate else {
+        guard let delegate = setValidationDelegate else {
             return
         }
         let result = delegate.isSet([card1, card2, card3])
@@ -238,7 +238,7 @@ class SetTests: XCTestCase {
         let card1 = Card(with: Card.Color.black, shape: Card.Shape.circle, fill: Card.Fill.empty, count: Card.Count.one)
         let card2 = Card(with: Card.Color.blue, shape: Card.Shape.circle, fill: Card.Fill.empty, count: Card.Count.two)
         let card3 = Card(with: Card.Color.red, shape: Card.Shape.circle, fill: Card.Fill.empty, count: Card.Count.three)
-        guard let delegate = setFinderDelegate else {
+        guard let delegate = setValidationDelegate else {
             return
         }
         let result = delegate.isSet([card1, card2, card3])
@@ -249,7 +249,7 @@ class SetTests: XCTestCase {
         let card1 = Card(with: Card.Color.red, shape: Card.Shape.square, fill: Card.Fill.empty, count: Card.Count.one)
         let card2 = Card(with: Card.Color.red, shape: Card.Shape.square, fill: Card.Fill.filled, count: Card.Count.two)
         let card3 = Card(with: Card.Color.red, shape: Card.Shape.square, fill: Card.Fill.striped, count: Card.Count.three)
-        guard let delegate = setFinderDelegate else {
+        guard let delegate = setValidationDelegate else {
             return
         }
         let result = delegate.isSet([card1, card2, card3])
@@ -260,7 +260,7 @@ class SetTests: XCTestCase {
         let card1 = Card(with: Card.Color.black, shape: Card.Shape.circle, fill: Card.Fill.empty, count: Card.Count.one)
         let card2 = Card(with: Card.Color.blue, shape: Card.Shape.square, fill: Card.Fill.filled, count: Card.Count.two)
         let card3 = Card(with: Card.Color.red, shape: Card.Shape.triangle, fill: Card.Fill.striped, count: Card.Count.three)
-        guard let delegate = setFinderDelegate else {
+        guard let delegate = setValidationDelegate else {
             return
         }
         let result = delegate.isSet([card1, card2, card3])
@@ -271,7 +271,7 @@ class SetTests: XCTestCase {
         let card1 = Card(with: Card.Color.black, shape: Card.Shape.circle, fill: Card.Fill.empty, count: Card.Count.one)
         let card2 = Card(with: Card.Color.blue, shape: Card.Shape.circle, fill: Card.Fill.empty, count: Card.Count.one)
         let card3 = Card(with: Card.Color.red, shape: Card.Shape.circle, fill: Card.Fill.empty, count: Card.Count.one)
-        guard let delegate = setFinderDelegate else {
+        guard let delegate = setValidationDelegate else {
             return
         }
         let result = delegate.isSet([card1, card2, card3])
@@ -282,7 +282,7 @@ class SetTests: XCTestCase {
         let card1 = Card(with: Card.Color.black, shape: Card.Shape.circle, fill: Card.Fill.empty, count: Card.Count.one)
         let card2 = Card(with: Card.Color.black, shape: Card.Shape.circle, fill: Card.Fill.empty, count: Card.Count.one)
         let card3 = Card(with: Card.Color.black, shape: Card.Shape.circle, fill: Card.Fill.empty, count: Card.Count.one)
-        guard let delegate = setFinderDelegate else {
+        guard let delegate = setValidationDelegate else {
             return
         }
         let result = delegate.isSet([card1, card2, card3])
@@ -293,7 +293,7 @@ class SetTests: XCTestCase {
         let card1 = Card(with: .black, shape: .circle, fill: .empty, count: .one)
         let card2 = Card(with: .blue, shape: .square, fill: .filled, count: .two)
         let card3 = Card(with: .red, shape: .triangle, fill: .striped, count: .three)
-        guard let delegate = setFinderDelegate else {
+        guard let delegate = setValidationDelegate else {
             return
         }
         let result = delegate.isSet([card1, card2, card3])
