@@ -6,4 +6,9 @@
 //  Copyright © 2018 Kelly Morales. All rights reserved.
 //
 
-import Foundation
+import UIKit
+
+/// Protocol defining an object that contains the gameBoard collectionView, generally a UIViewController
+protocol SETGameBoardProtocol: AnyObject {
+    var gameBoard: UICollectionView? { get set }
+}
