@@ -82,13 +82,13 @@ class Deck: SetFinderProtocol {
             }
         }
 
-        cards = []
+        var cardsToReturn: [Card] = []
         for _ in 0..<numCardsToDeal {
             guard let card = dealCard() else {
                 return nil
             }
-            cards.append(card)
+            cardsToReturn.append(card)
         }
-        return cards
+        return cardsToReturn
     }
 }
