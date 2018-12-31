@@ -7,3 +7,10 @@
 //
 
 import Foundation
+
+struct SETConstants {
+    /// 4
+    static let boardDefaultNumberOfRows: Int = 4
+    /// 3
+    static let boardDefaultNumberOfCardsPerRow: Int = 3
+}
