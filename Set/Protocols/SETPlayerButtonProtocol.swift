@@ -1,5 +1,5 @@
 //
-//  SETGameBoardButtonProtocol.swift
+//  SETPlayerButtonProtocol.swift
 //  Set
 //
 //  Created by Kelly Morales on 12/31/18.
@@ -9,7 +9,10 @@
 import Foundation
 
 /// Functions that affect the game board when a player button is selected
-protocol SETGameBoardButtonProtocol: AnyObject {
+protocol SETPlayerButtonProtocol: AnyObject {
+    /// Contains logic for when a player button is in it's selecting state
     func playerSelecting()
+
+    /// Contains logic for when a player button has just completed it's selecting state
     func playerStoppedSelecting()
 }
