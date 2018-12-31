@@ -10,7 +10,7 @@ import Foundation
 
 let sharedDeck = Deck()
 
-class Deck: SetFinderProtocol {
+class Deck: SETValidationProtocol {
 
     private var cards: [Card] = []
     /// The number of cards remaining in the Deck
