@@ -10,13 +10,9 @@ import Foundation
 import UIKit
 
 /// Where the game is played. Initialized with a number of players to determine if and how many buttons are added around the gameboard.
-class GameBoardViewController: UIViewController {
+class GameBoardViewController: UIViewController, SETGameBoardProtocol {
 
-    private var numberOfPlayers: Int?
-    private var playerButtons: [PlayerButton] = []
-    private lazy var singlePlayerScoreLabel: UILabel = UILabel()
-
-    private var gameBoard: UICollectionView?
+    var gameBoard: UICollectionView?
 
     private var collectionViewCellWidth: CGFloat {
         get {
@@ -39,22 +35,19 @@ class GameBoardViewController: UIViewController {
         }
     }
 
-    private var currentSet: [CardCollectionViewCell] = []
-
-    /// Determines if the cards can be selected
-    private var cardSelectionEnabled: Bool = false {
-        didSet{
-            gameBoard?.isUserInteractionEnabled = cardSelectionEnabled
-            if !cardSelectionEnabled {
-                resetCurrentSet()
-            }
-        }
-    }
+    private var dataSourceDelegate: SETGameBoardDataSourceProtocol?
+    private var currentCards: [Card] = []
+    lazy private var currentSet: [CardCollectionViewCell] = []
 
     // MARK:- Lifecycle Methods
     init(numberOfPlayers: Int) {
         super.init(nibName: nil, bundle: nil)
-        self.numberOfPlayers = numberOfPlayers
+        if numberOfPlayers == 1 {
+            self.dataSourceDelegate = SETSinglePlayerDataSource()
+        } else if numberOfPlayers > 1 {
+            self.dataSourceDelegate = SETMultiPlayerDataSource(numberOfPlayers: numberOfPlayers)
+        }
+        dataSourceDelegate?.gameBoardDelegate = self
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -67,100 +60,16 @@ class GameBoardViewController: UIViewController {
         self.navigationItem.hidesBackButton = true
         let backButton = UIBarButtonItem(title: "EXIT", style: UIBarButtonItemStyle.plain, target: self, action: #selector(backAction))
         self.navigationItem.leftBarButtonItem = backButton
+        currentCards = sharedDeck.getInitialDeal()
     }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        setupPlayerButtons()
-        setupCollectionView()
+        dataSourceDelegate?.setupPlayerElements()
+        setupCardCollectionView()
     }
 
-    private func setupPlayerButtons() {
-        guard let numberOfPlayers = numberOfPlayers else {
-            return
-        }
-        if numberOfPlayers > 1 {
-            for i in 1...numberOfPlayers {
-                let button = drawButtonForPlayer(num: i)
-                button.gameBoardButtonDelegate = self
-                playerButtons.append(button)
-            }
-        } else {
-            setupScoreLabel()
-        }
-    }
-
-    private func setupScoreLabel() {
-        if singlePlayerScoreLabel.superview == nil {
-            self.view.addSubview(singlePlayerScoreLabel)
-        }
-        singlePlayerScoreLabel.textAlignment = .center
-        singlePlayerScoreLabel.font = UIFont.boldSystemFont(ofSize: 24)
-        singlePlayerScoreLabel.text = "SCORE:"
-        singlePlayerScoreLabel.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint(item: singlePlayerScoreLabel, attribute: .bottom, relatedBy: .equal, toItem: singlePlayerScoreLabel.superview, attribute: .bottomMargin, multiplier: 0.95, constant: 0).isActive = true
-        NSLayoutConstraint(item: singlePlayerScoreLabel, attribute: .centerX, relatedBy: .equal, toItem: singlePlayerScoreLabel.superview, attribute: .centerX, multiplier: 1, constant: 0).isActive = true
-        NSLayoutConstraint(item: singlePlayerScoreLabel, attribute: .width, relatedBy: .equal, toItem: singlePlayerScoreLabel.superview, attribute: .width, multiplier: 0.9, constant: 0).isActive = true
-        NSLayoutConstraint(item: singlePlayerScoreLabel, attribute: .height, relatedBy: .equal, toItem: singlePlayerScoreLabel.superview, attribute: .height, multiplier: 0.1, constant: 0).isActive = true
-    }
-
-    private func drawButtonForPlayer(num: Int) -> PlayerButton {
-        let button = PlayerButton(color: getColorForPlayer(num))
-        self.view.addSubview(button)
-        setConstraintsForPlayerButton(button: button, number: num)
-        return button
-    }
-
-    private func setConstraintsForPlayerButton(button: PlayerButton, number: Int) {
-        guard let numberOfPlayers = numberOfPlayers else {
-            return
-        }
-        switch number {
-        case 1:
-            NSLayoutConstraint(item: button, attribute: .bottom, relatedBy: .equal, toItem: button.superview, attribute: .bottomMargin, multiplier: 0.98, constant: 0).isActive = true
-            if numberOfPlayers > 2 {
-                NSLayoutConstraint(item: button, attribute: .left, relatedBy: .equal, toItem: button.superview, attribute: .leftMargin, multiplier: 1, constant: 0).isActive = true
-                NSLayoutConstraint(item: button, attribute: .right, relatedBy: .equal, toItem: button.superview, attribute: .centerX, multiplier: 0.95, constant: 0).isActive = true
-            } else {
-                NSLayoutConstraint(item: button, attribute: .centerX, relatedBy: .equal, toItem: button.superview, attribute: .centerX, multiplier: 1, constant: 0).isActive = true
-                NSLayoutConstraint(item: button, attribute: .width, relatedBy: .equal, toItem: button.superview, attribute: .width, multiplier: 0.9, constant: 0).isActive = true
-            }
-        case 2:
-            NSLayoutConstraint(item: button, attribute: .top, relatedBy: .equal, toItem: button.superview, attribute: .topMargin, multiplier: 1.2, constant: 0).isActive = true
-            if numberOfPlayers > 3 {
-                NSLayoutConstraint(item: button, attribute: .left, relatedBy: .equal, toItem: button.superview, attribute: .leftMargin, multiplier: 1, constant: 0).isActive = true
-                NSLayoutConstraint(item: button, attribute: .right, relatedBy: .equal, toItem: button.superview, attribute: .centerX, multiplier: 0.95, constant: 0).isActive = true
-            } else {
-                NSLayoutConstraint(item: button, attribute: .centerX, relatedBy: .equal, toItem: button.superview, attribute: .centerX, multiplier: 1, constant: 0).isActive = true
-                NSLayoutConstraint(item: button, attribute: .width, relatedBy: .equal, toItem: button.superview, attribute: .width, multiplier: 0.9, constant: 0).isActive = true
-            }
-            button.transform = button.transform.rotated(by: .pi)
-        case 3:
-            NSLayoutConstraint(item: button, attribute: .bottom, relatedBy: .equal, toItem: button.superview, attribute: .bottomMargin, multiplier: 0.98, constant: 0).isActive = true
-            NSLayoutConstraint(item: button, attribute: .left, relatedBy: .equal, toItem: button.superview, attribute: .centerX, multiplier: 0.98, constant: 0).isActive = true
-            NSLayoutConstraint(item: button, attribute: .right, relatedBy: .equal, toItem: button.superview, attribute: .rightMargin, multiplier: 1, constant: 0).isActive = true
-        case 4:
-            NSLayoutConstraint(item: button, attribute: .top, relatedBy: .equal, toItem: button.superview, attribute: .topMargin, multiplier: 1.2, constant: 0).isActive = true
-            NSLayoutConstraint(item: button, attribute: .left, relatedBy: .equal, toItem: button.superview, attribute: .centerX, multiplier: 0.98, constant: 0).isActive = true
-            NSLayoutConstraint(item: button, attribute: .right, relatedBy: .equal, toItem: button.superview, attribute: .rightMargin, multiplier: 1, constant: 0).isActive = true
-            button.transform = button.transform.rotated(by: .pi)
-        default:
-            return
-        }
-        button.addHeightConstraint()
-    }
-
-    private func getColorForPlayer(_ num: Int) -> UIColor {
-        switch num {
-        case 1: return .blue
-        case 2: return .purple
-        case 3: return .black
-        case 4: return .red
-        default: return .blue
-        }
-    }
-
-    private func setupCollectionView() {
+    private func setupCardCollectionView() {
         if gameBoard?.superview == nil {
             let layout = UICollectionViewFlowLayout()
             layout.sectionInset = UIEdgeInsetsMake(spaceBetweenCollectionViewSections, 0, 0, 0)
@@ -174,22 +83,11 @@ class GameBoardViewController: UIViewController {
             gameBoard.delegate = self
             gameBoard.dataSource = self
             self.view.addSubview(gameBoard)
-            if numberOfPlayers != 1 {
-                gameBoard.isUserInteractionEnabled = false
-            }
 
             gameBoard.translatesAutoresizingMaskIntoConstraints = false
             NSLayoutConstraint(item: gameBoard, attribute: NSLayoutAttribute.centerX, relatedBy: NSLayoutRelation.equal, toItem: gameBoard.superview, attribute: NSLayoutAttribute.centerX, multiplier: 1, constant: 0).isActive = true
             NSLayoutConstraint(item: gameBoard, attribute: NSLayoutAttribute.width, relatedBy: NSLayoutRelation.equal, toItem: gameBoard.superview, attribute: NSLayoutAttribute.width, multiplier: 0.9, constant: 0).isActive = true
-            if playerButtons.count > 1 {
-                let bottomPlayerButton = playerButtons[0]
-                let topPlayerButton = playerButtons[1]
-                NSLayoutConstraint(item: gameBoard, attribute: NSLayoutAttribute.top, relatedBy: NSLayoutRelation.equal, toItem: topPlayerButton, attribute: NSLayoutAttribute.bottomMargin, multiplier: 1, constant: 10).isActive = true
-                NSLayoutConstraint(item: gameBoard, attribute: NSLayoutAttribute.bottom, relatedBy: NSLayoutRelation.equal, toItem: bottomPlayerButton, attribute: NSLayoutAttribute.topMargin, multiplier: 1, constant: -10).isActive = true
-            } else {
-                NSLayoutConstraint(item: gameBoard, attribute: NSLayoutAttribute.top, relatedBy: NSLayoutRelation.equal, toItem: gameBoard.superview, attribute: NSLayoutAttribute.topMargin, multiplier: 1, constant: 0).isActive = true
-                NSLayoutConstraint(item: gameBoard, attribute: NSLayoutAttribute.bottom, relatedBy: NSLayoutRelation.equal, toItem: singlePlayerScoreLabel, attribute: NSLayoutAttribute.top, multiplier: 1, constant: 0).isActive = true
-            }
+            dataSourceDelegate?.completeGameBoardConstraints()
         }
     }
 
@@ -215,21 +113,36 @@ class GameBoardViewController: UIViewController {
 // MARK:- UICollectionViewDataSource
 extension GameBoardViewController: UICollectionViewDataSource {
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return 4
+        // The number of cards per row should divide evenly into the number of cards we are tracking
+        // if not, we add another section for the remaining cards (this should only happen when the deck
+        // is running out of cards to deal)
+        let remainder = currentCards.count % SETConstants.boardDefaultNumberOfCardsPerRow
+        var numSections = currentCards.count / SETConstants.boardDefaultNumberOfCardsPerRow
+        if remainder != 0 {
+            numSections += 1
+        }
+        return numSections
     }
 
     // number of sections defaults to 1 without implementation
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 3
+        // Should usually be boardDefaultNumberOfCardsPerRow, unless we have reached the end of the deck,
+        // then we'll display an equal number of cards until we can't, in which case we'll display the remainder
+        if section == numberOfSections(in: collectionView) - 1 {
+            let remainder = currentCards.count % SETConstants.boardDefaultNumberOfCardsPerRow
+            if remainder != 0 {
+                return remainder
+            }
+        }
+        return SETConstants.boardDefaultNumberOfCardsPerRow
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CardCollectionViewCell.reuseID(), for: indexPath) as? CardCollectionViewCell else {
             return UICollectionViewCell()
         }
-        if let card = sharedDeck.dealCard() {
-            cell.card = card
-        }
+        // uses 2d array to grab card from 1d array
+        cell.card = currentCards[indexPath.section * SETConstants.boardDefaultNumberOfCardsPerRow + indexPath.row]
         return cell
     }
 
@@ -243,19 +156,9 @@ extension GameBoardViewController: UICollectionViewDataSource {
             guard let card1 = currentSet[0].card, let card2 = currentSet[1].card, let card3 = currentSet[2].card else {
                 return
             }
-            let set = Set(cards: [card1, card2, card3])
-            if numberOfPlayers != 1 {
-                for button in playerButtons {
-                    if button.isSelecting {
-                        if set.isSet() {
-                            button.incrementScore()
-                        }
-                        button.setState(selected: false)
-                    }
-                }
-            } else {
-                resetCurrentSet()
-            }
+            let set = [card1, card2, card3]
+            dataSourceDelegate?.processSet(set)
+            resetCurrentSet()
         }
     }
 }
@@ -268,30 +171,5 @@ extension GameBoardViewController: UICollectionViewDelegateFlowLayout {
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
         return spaceBetweenCollectionViewCells
-    }
-}
-
-// MARK:- GameBoardButtonProtocol
-extension GameBoardViewController: GameBoardButtonProtocol {
-    /**
-     When a player button is pressed: disable all player buttons, enable card selection, and disable the exit button.
-     */
-    func playerSelecting() {
-        for button in playerButtons {
-            button.isUserInteractionEnabled = false
-        }
-        cardSelectionEnabled = true
-        self.navigationItem.leftBarButtonItem?.isEnabled = false
-    }
-
-    /**
-     When a player's turn is over: enable all player buttons, unselect cards and disable card selection, enable the exit button.
-     */
-    func playerStoppedSelecting() {
-        for button in playerButtons {
-            button.isUserInteractionEnabled = true
-        }
-        cardSelectionEnabled = false
-        self.navigationItem.leftBarButtonItem?.isEnabled = true
     }
 }
