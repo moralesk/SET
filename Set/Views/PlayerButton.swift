@@ -9,12 +9,6 @@
 import Foundation
 import UIKit
 
-/// Functions that affect the game board when a player button is selected
-protocol GameBoardButtonProtocol {
-    func playerSelecting()
-    func playerStoppedSelecting()
-}
-
 /// Button placed around the gameboard used for the players to select their SETs.
 class PlayerButton: UIButton {
 
@@ -29,7 +23,7 @@ class PlayerButton: UIButton {
         }
     }
 
-    var gameBoardButtonDelegate: GameBoardButtonProtocol?
+    weak var playerButtonDelegate: SETPlayerButtonProtocol?
     private var playerScore: Int = 0
 
     required init?(coder aDecoder: NSCoder) {
@@ -68,7 +62,7 @@ class PlayerButton: UIButton {
         backgroundColor = backgroundColor?.withAlphaComponent(0.8)
         isUserInteractionEnabled = false
         isSelecting = true
-        gameBoardButtonDelegate?.playerSelecting()
+        playerButtonDelegate?.playerSelecting()
     }
 
     @objc private func setToDefaultState() {
@@ -77,6 +71,6 @@ class PlayerButton: UIButton {
         isUserInteractionEnabled = true
         isSelecting = false
         NSObject.cancelPreviousPerformRequests(withTarget: self)
-        gameBoardButtonDelegate?.playerStoppedSelecting()
+        playerButtonDelegate?.playerStoppedSelecting()
     }
 }
