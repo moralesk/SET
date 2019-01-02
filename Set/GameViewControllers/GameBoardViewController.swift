@@ -36,7 +36,7 @@ class GameBoardViewController: UIViewController, SETGameBoardProtocol {
     }
 
     private var dataSourceDelegate: SETGameBoardDataSourceProtocol?
-    private var currentCards: [Card] = []
+    private var currentCards: [SETCard] = []
     lazy private var currentSet: [CardCollectionViewCell] = []
 
     // MARK:- Lifecycle Methods

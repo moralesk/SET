@@ -12,7 +12,7 @@ let sharedDeck = Deck()
 
 class Deck: SETValidationProtocol {
 
-    private var cards: [Card] = []
+    private var cards: [SETCard] = []
     /// The number of cards remaining in the Deck
     var numberOfCards: Int {
         get {
@@ -23,15 +23,15 @@ class Deck: SETValidationProtocol {
     /// Resets the deck to have 81 cards in a random order
     func shuffle() {
         cards.removeAll()
-        var unshuffledDeck: [Card] = []
-        for i in 0..<Card.Color.count.rawValue {
-            for j in 0..<Card.Shape.count.rawValue {
-                for k in 0..<Card.Fill.count.rawValue {
-                    for l in 0..<Card.Count.count.rawValue {
-                        guard let color = Card.Color(rawValue: i), let shape = Card.Shape(rawValue: j), let fill = Card.Fill(rawValue: k), let count = Card.Count(rawValue: l) else {
+        var unshuffledDeck: [SETCard] = []
+        for i in 0..<SETCard.Color.count.rawValue {
+            for j in 0..<SETCard.Shape.count.rawValue {
+                for k in 0..<SETCard.Fill.count.rawValue {
+                    for l in 0..<SETCard.Count.count.rawValue {
+                        guard let color = SETCard.Color(rawValue: i), let shape = SETCard.Shape(rawValue: j), let fill = SETCard.Fill(rawValue: k), let count = SETCard.Count(rawValue: l) else {
                             return
                         }
-                        let cardToAdd = Card(with: color, shape: shape, fill: fill, count: count)
+                        let cardToAdd = SETCard(with: color, shape: shape, fill: fill, count: count)
                         unshuffledDeck.append(cardToAdd)
                     }
                 }
@@ -44,7 +44,7 @@ class Deck: SETValidationProtocol {
     }
 
     /// Returns the next optional card in the deck
-    func dealCard() -> Card? {
+    func dealCard() -> SETCard? {
         if cards.count > 0 {
             return cards.removeFirst()
         }
@@ -55,7 +55,7 @@ class Deck: SETValidationProtocol {
      Returns the first group of cards to be displayed, typically 12 unless a SET doesn't exist, then an extra
      three cards are added until a SET exists in the list.
      */
-    func getInitialDeal() -> [Card] {
+    func getInitialDeal() -> [SETCard] {
         if var initialCards = deal(numberOfCards: SETConstants.boardDefaultNumberOfRows * SETConstants.boardDefaultNumberOfCardsPerRow) {
             while !setExists(in: initialCards) {
                 if let additionalCards = deal(numberOfCards: 3, dealMaximumPossible: true) {
@@ -72,7 +72,7 @@ class Deck: SETValidationProtocol {
      - parameter dealMaximumPossible: a flag to ask for the maximum number of cards to be returned if the ideal numberOfCards is more than what is left in the deck
      - returns: an optional array of Cards
      */
-    func deal(numberOfCards: Int, dealMaximumPossible: Bool = false) -> [Card]? {
+    func deal(numberOfCards: Int, dealMaximumPossible: Bool = false) -> [SETCard]? {
         var numCardsToDeal = numberOfCards
         if self.numberOfCards < numCardsToDeal {
             if !dealMaximumPossible {
@@ -82,7 +82,7 @@ class Deck: SETValidationProtocol {
             }
         }
 
-        var cardsToReturn: [Card] = []
+        var cardsToReturn: [SETCard] = []
         for _ in 0..<numCardsToDeal {
             guard let card = dealCard() else {
                 return nil

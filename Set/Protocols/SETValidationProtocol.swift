@@ -11,14 +11,14 @@ import Foundation
 /// Protocol containing logic for validating SETs
 protocol SETValidationProtocol {
     /// Determines if a set exists within a given list of Cards
-    func setExists(in cards: [Card]) -> Bool
+    func setExists(in cards: [SETCard]) -> Bool
 
     /// Determines if the given array of 3 cards is a SET
-    func isSet(_ cards: [Card]) -> Bool
+    func isSet(_ cards: [SETCard]) -> Bool
 }
 
 extension SETValidationProtocol {
-    func setExists(in cards: [Card]) -> Bool {
+    func setExists(in cards: [SETCard]) -> Bool {
         if cards.count < 3 {
             return false
         }
@@ -37,7 +37,7 @@ extension SETValidationProtocol {
         return false
     }
 
-    func isSet(_ cards: [Card]) -> Bool {
+    func isSet(_ cards: [SETCard]) -> Bool {
         if cards.count != 3 {
             return false
         }
@@ -52,7 +52,7 @@ extension SETValidationProtocol {
     // MARK:- Private Validation functions
     // These functions take whichever attribute of a group of cards and determines if they're either all the same
     // or all different, otherwise they will not create a set
-    private func areCardColorsValid(_ cards: [Card]) -> Bool {
+    private func areCardColorsValid(_ cards: [SETCard]) -> Bool {
         if cards.count != 3 {
             return false
         }
@@ -62,7 +62,7 @@ extension SETValidationProtocol {
                 && cards[0].color != cards[2].color)
     }
     
-    private func areCardShapesValid(_ cards: [Card]) -> Bool {
+    private func areCardShapesValid(_ cards: [SETCard]) -> Bool {
         if cards.count != 3 {
             return false
         }
@@ -72,7 +72,7 @@ extension SETValidationProtocol {
                 && cards[0].shape != cards[2].shape)
     }
     
-    private func areCardFillsValid(_ cards: [Card]) -> Bool {
+    private func areCardFillsValid(_ cards: [SETCard]) -> Bool {
         if cards.count != 3 {
             return false
         }
@@ -82,7 +82,7 @@ extension SETValidationProtocol {
                 && cards[0].fill != cards[2].fill)
     }
     
-    private func areCardCountsValid(_ cards: [Card]) -> Bool {
+    private func areCardCountsValid(_ cards: [SETCard]) -> Bool {
         if cards.count != 3 {
             return false
         }
@@ -96,20 +96,20 @@ extension SETValidationProtocol {
      - parameter pair: an array of two cards
      - returns: the card that will complete the set given the two cards
      */
-    private func findLastCard(for pair: [Card]) -> Card? {
+    private func findLastCard(for pair: [SETCard]) -> SETCard? {
         if pair.count != 2 {
             return nil
         }
-        let lastCardColor = Card.Color(rawValue: getLastEnumOption(card1Option: pair[0].color.rawValue, card2Option: pair[1].color.rawValue))
-        let lastCardShape = Card.Shape(rawValue: getLastEnumOption(card1Option: pair[0].shape.rawValue, card2Option: pair[1].shape.rawValue))
-        let lastCardFill = Card.Fill(rawValue: getLastEnumOption(card1Option: pair[0].fill.rawValue, card2Option: pair[1].fill.rawValue))
-        let lastCardCount = Card.Count(rawValue: getLastEnumOption(card1Option: pair[0].count.rawValue, card2Option: pair[1].count.rawValue))
+        let lastCardColor = SETCard.Color(rawValue: getLastEnumOption(card1Option: pair[0].color.rawValue, card2Option: pair[1].color.rawValue))
+        let lastCardShape = SETCard.Shape(rawValue: getLastEnumOption(card1Option: pair[0].shape.rawValue, card2Option: pair[1].shape.rawValue))
+        let lastCardFill = SETCard.Fill(rawValue: getLastEnumOption(card1Option: pair[0].fill.rawValue, card2Option: pair[1].fill.rawValue))
+        let lastCardCount = SETCard.Count(rawValue: getLastEnumOption(card1Option: pair[0].count.rawValue, card2Option: pair[1].count.rawValue))
 
         guard let color = lastCardColor, let shape = lastCardShape, let fill = lastCardFill, let count = lastCardCount else {
             return nil
         }
 
-        let lastCard = Card(with: color, shape: shape, fill: fill, count: count)
+        let lastCard = SETCard(with: color, shape: shape, fill: fill, count: count)
         return lastCard
     }
 

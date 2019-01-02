@@ -23,7 +23,7 @@ class SetExistsTests: XCTestCase {
     }
 
     func testNotEnoughCards() {
-        let card = Card(with: .black, shape: .circle, fill: .empty, count: .one)
+        let card = SETCard(with: .black, shape: .circle, fill: .empty, count: .one)
 
         guard let delegate = setValidationDelegate else {
             return
@@ -34,9 +34,9 @@ class SetExistsTests: XCTestCase {
     }
 
     func testExactlyEnoughCardsWithSet() {
-        let card1 = Card(with: .black, shape: .circle, fill: .empty, count: .one)
-        let card2 = Card(with: .black, shape: .circle, fill: .empty, count: .two)
-        let card3 = Card(with: .black, shape: .circle, fill: .empty, count: .three)
+        let card1 = SETCard(with: .black, shape: .circle, fill: .empty, count: .one)
+        let card2 = SETCard(with: .black, shape: .circle, fill: .empty, count: .two)
+        let card3 = SETCard(with: .black, shape: .circle, fill: .empty, count: .three)
 
         guard let delegate = setValidationDelegate else {
             return
@@ -47,9 +47,9 @@ class SetExistsTests: XCTestCase {
     }
 
     func testExactlyEnoughCardsWithoutSet() {
-        let card1 = Card(with: .black, shape: .circle, fill: .empty, count: .one)
-        let card2 = Card(with: .black, shape: .circle, fill: .empty, count: .two)
-        let card3 = Card(with: .black, shape: .circle, fill: .empty, count: .two)
+        let card1 = SETCard(with: .black, shape: .circle, fill: .empty, count: .one)
+        let card2 = SETCard(with: .black, shape: .circle, fill: .empty, count: .two)
+        let card3 = SETCard(with: .black, shape: .circle, fill: .empty, count: .two)
 
         guard let delegate = setValidationDelegate else {
             return
@@ -60,18 +60,18 @@ class SetExistsTests: XCTestCase {
     }
 
     func testMultipleSetsExist() {
-        let card1 = Card(with: .red, shape: .circle, fill: .filled, count: .one)
-        let card2 = Card(with: .red, shape: .square, fill: .empty, count: .one)
-        let card3 = Card(with: .red, shape: .triangle, fill: .striped, count: .two)
-        let card4 = Card(with: .red, shape: .triangle, fill: .filled, count: .two)
-        let card5 = Card(with: .red, shape: .circle, fill: .empty, count: .three)
-        let card6 = Card(with: .black, shape: .circle, fill: .empty, count: .one)
-        let card7 = Card(with: .black, shape: .circle, fill: .striped, count: .two)
-        let card8 = Card(with: .black, shape: .circle, fill: .filled, count: .three)
-        let card9 = Card(with: .black, shape: .triangle, fill: .striped, count: .three)
-        let card10 = Card(with: .blue, shape: .square, fill: .striped, count: .one)
-        let card11 = Card(with: .blue, shape: .triangle, fill: .striped, count: .two)
-        let card12 = Card(with: .blue, shape: .triangle, fill: .empty, count: .three)
+        let card1 = SETCard(with: .red, shape: .circle, fill: .filled, count: .one)
+        let card2 = SETCard(with: .red, shape: .square, fill: .empty, count: .one)
+        let card3 = SETCard(with: .red, shape: .triangle, fill: .striped, count: .two)
+        let card4 = SETCard(with: .red, shape: .triangle, fill: .filled, count: .two)
+        let card5 = SETCard(with: .red, shape: .circle, fill: .empty, count: .three)
+        let card6 = SETCard(with: .black, shape: .circle, fill: .empty, count: .one)
+        let card7 = SETCard(with: .black, shape: .circle, fill: .striped, count: .two)
+        let card8 = SETCard(with: .black, shape: .circle, fill: .filled, count: .three)
+        let card9 = SETCard(with: .black, shape: .triangle, fill: .striped, count: .three)
+        let card10 = SETCard(with: .blue, shape: .square, fill: .striped, count: .one)
+        let card11 = SETCard(with: .blue, shape: .triangle, fill: .striped, count: .two)
+        let card12 = SETCard(with: .blue, shape: .triangle, fill: .empty, count: .three)
 
         guard let delegate = setValidationDelegate else {
             return
@@ -82,18 +82,18 @@ class SetExistsTests: XCTestCase {
     }
 
     func testNoSetExists() {
-        let card1 = Card(with: .blue, shape: .triangle, fill: .filled, count: .one)
-        let card2 = Card(with: .red, shape: .square, fill: .striped, count: .two)
-        let card3 = Card(with: .red, shape: .circle, fill: .empty, count: .one)
-        let card4 = Card(with: .red, shape: .square, fill: .filled, count: .one)
-        let card5 = Card(with: .black, shape: .triangle, fill: .striped, count: .two)
-        let card6 = Card(with: .blue, shape: .triangle, fill: .filled, count: .three)
-        let card7 = Card(with: .red, shape: .square, fill: .striped, count: .three)
-        let card8 = Card(with: .blue, shape: .circle, fill: .empty, count: .two)
-        let card9 = Card(with: .blue, shape: .square, fill: .empty, count: .two)
-        let card10 = Card(with: .blue, shape: .triangle, fill: .empty, count: .one)
-        let card11 = Card(with: .black, shape: .square, fill: .empty, count: .three)
-        let card12 = Card(with: .red, shape: .triangle, fill: .striped, count: .two)
+        let card1 = SETCard(with: .blue, shape: .triangle, fill: .filled, count: .one)
+        let card2 = SETCard(with: .red, shape: .square, fill: .striped, count: .two)
+        let card3 = SETCard(with: .red, shape: .circle, fill: .empty, count: .one)
+        let card4 = SETCard(with: .red, shape: .square, fill: .filled, count: .one)
+        let card5 = SETCard(with: .black, shape: .triangle, fill: .striped, count: .two)
+        let card6 = SETCard(with: .blue, shape: .triangle, fill: .filled, count: .three)
+        let card7 = SETCard(with: .red, shape: .square, fill: .striped, count: .three)
+        let card8 = SETCard(with: .blue, shape: .circle, fill: .empty, count: .two)
+        let card9 = SETCard(with: .blue, shape: .square, fill: .empty, count: .two)
+        let card10 = SETCard(with: .blue, shape: .triangle, fill: .empty, count: .one)
+        let card11 = SETCard(with: .black, shape: .square, fill: .empty, count: .three)
+        let card12 = SETCard(with: .red, shape: .triangle, fill: .striped, count: .two)
 
         guard let delegate = setValidationDelegate else {
             return

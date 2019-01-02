@@ -1,5 +1,5 @@
 //
-//  Card.swift
+//  SETCard.swift
 //  Set
 //
 //  Created by Kelly Morales on 4/6/18.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-class Card {
+class SETCard {
     enum Color: Int {
         case red = 0
         case black
@@ -50,8 +50,8 @@ class Card {
     }
 }
 
-extension Card: Equatable {
-    static func == (lhs: Card, rhs: Card) -> Bool {
+extension SETCard: Equatable {
+    static func == (lhs: SETCard, rhs: SETCard) -> Bool {
         return lhs.color == rhs.color
             && lhs.shape == rhs.shape
             && lhs.fill == rhs.fill
@@ -59,7 +59,7 @@ extension Card: Equatable {
     }
 }
 
-extension Card: CustomStringConvertible {
+extension SETCard: CustomStringConvertible {
     var description: String {
         return "Card: \(count) \(color) \(fill) \(shape)\n"
     }

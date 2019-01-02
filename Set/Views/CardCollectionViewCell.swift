@@ -12,7 +12,7 @@ import UIKit
 /// Displays the Card cells in the gameboard collectionView.
 class CardCollectionViewCell: UICollectionViewCell {
 
-    var card: Card? {
+    var card: SETCard? {
         didSet {
             if card != nil {
                 // TODO: remove when assets are available

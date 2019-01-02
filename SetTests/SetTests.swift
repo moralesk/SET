@@ -26,9 +26,9 @@ class SetTests: XCTestCase {
     }
 
     func testOnlyColorsAreEqual() {
-        let card1 = Card(with: Card.Color.red, shape: Card.Shape.square, fill: Card.Fill.empty, count: Card.Count.one)
-        let card2 = Card(with: Card.Color.red, shape: Card.Shape.circle, fill: Card.Fill.filled, count: Card.Count.two)
-        let card3 = Card(with: Card.Color.red, shape: Card.Shape.triangle, fill: Card.Fill.striped, count: Card.Count.three)
+        let card1 = SETCard(with: SETCard.Color.red, shape: SETCard.Shape.square, fill: SETCard.Fill.empty, count: SETCard.Count.one)
+        let card2 = SETCard(with: SETCard.Color.red, shape: SETCard.Shape.circle, fill: SETCard.Fill.filled, count: SETCard.Count.two)
+        let card3 = SETCard(with: SETCard.Color.red, shape: SETCard.Shape.triangle, fill: SETCard.Fill.striped, count: SETCard.Count.three)
         guard let delegate = setValidationDelegate else {
             return
         }
@@ -37,9 +37,9 @@ class SetTests: XCTestCase {
     }
 
     func testOnlyShapesAreEqual() {
-        let card1 = Card(with: Card.Color.red, shape: Card.Shape.square, fill: Card.Fill.empty, count: Card.Count.one)
-        let card2 = Card(with: Card.Color.black, shape: Card.Shape.square, fill: Card.Fill.filled, count: Card.Count.two)
-        let card3 = Card(with: Card.Color.blue, shape: Card.Shape.square, fill: Card.Fill.striped, count: Card.Count.three)
+        let card1 = SETCard(with: SETCard.Color.red, shape: SETCard.Shape.square, fill: SETCard.Fill.empty, count: SETCard.Count.one)
+        let card2 = SETCard(with: SETCard.Color.black, shape: SETCard.Shape.square, fill: SETCard.Fill.filled, count: SETCard.Count.two)
+        let card3 = SETCard(with: SETCard.Color.blue, shape: SETCard.Shape.square, fill: SETCard.Fill.striped, count: SETCard.Count.three)
         guard let delegate = setValidationDelegate else {
             return
         }
@@ -48,9 +48,9 @@ class SetTests: XCTestCase {
     }
 
     func testOnlyFillsAreEqual() {
-        let card1 = Card(with: Card.Color.red, shape: Card.Shape.square, fill: Card.Fill.empty, count: Card.Count.one)
-        let card2 = Card(with: Card.Color.black, shape: Card.Shape.circle, fill: Card.Fill.empty, count: Card.Count.two)
-        let card3 = Card(with: Card.Color.blue, shape: Card.Shape.triangle, fill: Card.Fill.empty, count: Card.Count.three)
+        let card1 = SETCard(with: SETCard.Color.red, shape: SETCard.Shape.square, fill: SETCard.Fill.empty, count: SETCard.Count.one)
+        let card2 = SETCard(with: SETCard.Color.black, shape: SETCard.Shape.circle, fill: SETCard.Fill.empty, count: SETCard.Count.two)
+        let card3 = SETCard(with: SETCard.Color.blue, shape: SETCard.Shape.triangle, fill: SETCard.Fill.empty, count: SETCard.Count.three)
         guard let delegate = setValidationDelegate else {
             return
         }
@@ -59,9 +59,9 @@ class SetTests: XCTestCase {
     }
 
     func testOnlyCountsAreEqual() {
-        let card1 = Card(with: Card.Color.red, shape: Card.Shape.square, fill: Card.Fill.empty, count: Card.Count.one)
-        let card2 = Card(with: Card.Color.black, shape: Card.Shape.circle, fill: Card.Fill.filled, count: Card.Count.one)
-        let card3 = Card(with: Card.Color.blue, shape: Card.Shape.triangle, fill: Card.Fill.striped, count: Card.Count.one)
+        let card1 = SETCard(with: SETCard.Color.red, shape: SETCard.Shape.square, fill: SETCard.Fill.empty, count: SETCard.Count.one)
+        let card2 = SETCard(with: SETCard.Color.black, shape: SETCard.Shape.circle, fill: SETCard.Fill.filled, count: SETCard.Count.one)
+        let card3 = SETCard(with: SETCard.Color.blue, shape: SETCard.Shape.triangle, fill: SETCard.Fill.striped, count: SETCard.Count.one)
         guard let delegate = setValidationDelegate else {
             return
         }
@@ -70,9 +70,9 @@ class SetTests: XCTestCase {
     }
 
     func testAllColorsAreInequal() {
-        let card1 = Card(with: Card.Color.red, shape: Card.Shape.circle, fill: Card.Fill.filled, count: Card.Count.two)
-        let card2 = Card(with: Card.Color.black, shape: Card.Shape.circle, fill: Card.Fill.filled, count: Card.Count.two)
-        let card3 = Card(with: Card.Color.blue, shape: Card.Shape.circle, fill: Card.Fill.filled, count: Card.Count.two)
+        let card1 = SETCard(with: SETCard.Color.red, shape: SETCard.Shape.circle, fill: SETCard.Fill.filled, count: SETCard.Count.two)
+        let card2 = SETCard(with: SETCard.Color.black, shape: SETCard.Shape.circle, fill: SETCard.Fill.filled, count: SETCard.Count.two)
+        let card3 = SETCard(with: SETCard.Color.blue, shape: SETCard.Shape.circle, fill: SETCard.Fill.filled, count: SETCard.Count.two)
         guard let delegate = setValidationDelegate else {
             return
         }
@@ -81,9 +81,9 @@ class SetTests: XCTestCase {
     }
 
     func testAllShapesAreInequal() {
-        let card1 = Card(with: Card.Color.black, shape: Card.Shape.circle, fill: Card.Fill.filled, count: Card.Count.two)
-        let card2 = Card(with: Card.Color.black, shape: Card.Shape.square, fill: Card.Fill.filled, count: Card.Count.two)
-        let card3 = Card(with: Card.Color.black, shape: Card.Shape.triangle, fill: Card.Fill.filled, count: Card.Count.two)
+        let card1 = SETCard(with: SETCard.Color.black, shape: SETCard.Shape.circle, fill: SETCard.Fill.filled, count: SETCard.Count.two)
+        let card2 = SETCard(with: SETCard.Color.black, shape: SETCard.Shape.square, fill: SETCard.Fill.filled, count: SETCard.Count.two)
+        let card3 = SETCard(with: SETCard.Color.black, shape: SETCard.Shape.triangle, fill: SETCard.Fill.filled, count: SETCard.Count.two)
         guard let delegate = setValidationDelegate else {
             return
         }
@@ -92,9 +92,9 @@ class SetTests: XCTestCase {
     }
 
     func testAllFillsAreInequal() {
-        let card1 = Card(with: Card.Color.black, shape: Card.Shape.circle, fill: Card.Fill.filled, count: Card.Count.two)
-        let card2 = Card(with: Card.Color.black, shape: Card.Shape.circle, fill: Card.Fill.empty, count: Card.Count.two)
-        let card3 = Card(with: Card.Color.black, shape: Card.Shape.circle, fill: Card.Fill.striped, count: Card.Count.two)
+        let card1 = SETCard(with: SETCard.Color.black, shape: SETCard.Shape.circle, fill: SETCard.Fill.filled, count: SETCard.Count.two)
+        let card2 = SETCard(with: SETCard.Color.black, shape: SETCard.Shape.circle, fill: SETCard.Fill.empty, count: SETCard.Count.two)
+        let card3 = SETCard(with: SETCard.Color.black, shape: SETCard.Shape.circle, fill: SETCard.Fill.striped, count: SETCard.Count.two)
         guard let delegate = setValidationDelegate else {
             return
         }
@@ -103,9 +103,9 @@ class SetTests: XCTestCase {
     }
 
     func testAllCountsAreInequal() {
-        let card1 = Card(with: Card.Color.black, shape: Card.Shape.circle, fill: Card.Fill.filled, count: Card.Count.one)
-        let card2 = Card(with: Card.Color.black, shape: Card.Shape.circle, fill: Card.Fill.filled, count: Card.Count.two)
-        let card3 = Card(with: Card.Color.black, shape: Card.Shape.circle, fill: Card.Fill.filled, count: Card.Count.three)
+        let card1 = SETCard(with: SETCard.Color.black, shape: SETCard.Shape.circle, fill: SETCard.Fill.filled, count: SETCard.Count.one)
+        let card2 = SETCard(with: SETCard.Color.black, shape: SETCard.Shape.circle, fill: SETCard.Fill.filled, count: SETCard.Count.two)
+        let card3 = SETCard(with: SETCard.Color.black, shape: SETCard.Shape.circle, fill: SETCard.Fill.filled, count: SETCard.Count.three)
         guard let delegate = setValidationDelegate else {
             return
         }
@@ -114,9 +114,9 @@ class SetTests: XCTestCase {
     }
 
     func testInvalidSetUsingOneWrongColor() {
-        let card1 = Card(with: Card.Color.red, shape: Card.Shape.circle, fill: Card.Fill.empty, count: Card.Count.two)
-        let card2 = Card(with: Card.Color.black, shape: Card.Shape.circle, fill: Card.Fill.empty, count: Card.Count.two)
-        let card3 = Card(with: Card.Color.black, shape: Card.Shape.circle, fill: Card.Fill.empty, count: Card.Count.two)
+        let card1 = SETCard(with: SETCard.Color.red, shape: SETCard.Shape.circle, fill: SETCard.Fill.empty, count: SETCard.Count.two)
+        let card2 = SETCard(with: SETCard.Color.black, shape: SETCard.Shape.circle, fill: SETCard.Fill.empty, count: SETCard.Count.two)
+        let card3 = SETCard(with: SETCard.Color.black, shape: SETCard.Shape.circle, fill: SETCard.Fill.empty, count: SETCard.Count.two)
         guard let delegate = setValidationDelegate else {
             return
         }
@@ -125,9 +125,9 @@ class SetTests: XCTestCase {
     }
 
     func testInvalidSetUsingOneWrongShape() {
-        let card1 = Card(with: Card.Color.black, shape: Card.Shape.circle, fill: Card.Fill.empty, count: Card.Count.two)
-        let card2 = Card(with: Card.Color.black, shape: Card.Shape.square, fill: Card.Fill.empty, count: Card.Count.two)
-        let card3 = Card(with: Card.Color.black, shape: Card.Shape.circle, fill: Card.Fill.empty, count: Card.Count.two)
+        let card1 = SETCard(with: SETCard.Color.black, shape: SETCard.Shape.circle, fill: SETCard.Fill.empty, count: SETCard.Count.two)
+        let card2 = SETCard(with: SETCard.Color.black, shape: SETCard.Shape.square, fill: SETCard.Fill.empty, count: SETCard.Count.two)
+        let card3 = SETCard(with: SETCard.Color.black, shape: SETCard.Shape.circle, fill: SETCard.Fill.empty, count: SETCard.Count.two)
         guard let delegate = setValidationDelegate else {
             return
         }
@@ -136,9 +136,9 @@ class SetTests: XCTestCase {
     }
 
     func testInvalidSetUsingOneWrongFill() {
-        let card1 = Card(with: Card.Color.black, shape: Card.Shape.circle, fill: Card.Fill.empty, count: Card.Count.two)
-        let card2 = Card(with: Card.Color.black, shape: Card.Shape.circle, fill: Card.Fill.empty, count: Card.Count.two)
-        let card3 = Card(with: Card.Color.black, shape: Card.Shape.circle, fill: Card.Fill.striped, count: Card.Count.two)
+        let card1 = SETCard(with: SETCard.Color.black, shape: SETCard.Shape.circle, fill: SETCard.Fill.empty, count: SETCard.Count.two)
+        let card2 = SETCard(with: SETCard.Color.black, shape: SETCard.Shape.circle, fill: SETCard.Fill.empty, count: SETCard.Count.two)
+        let card3 = SETCard(with: SETCard.Color.black, shape: SETCard.Shape.circle, fill: SETCard.Fill.striped, count: SETCard.Count.two)
         guard let delegate = setValidationDelegate else {
             return
         }
@@ -147,9 +147,9 @@ class SetTests: XCTestCase {
     }
 
     func testInvalidSetUsingOneWrongCount() {
-        let card1 = Card(with: Card.Color.black, shape: Card.Shape.circle, fill: Card.Fill.empty, count: Card.Count.two)
-        let card2 = Card(with: Card.Color.black, shape: Card.Shape.circle, fill: Card.Fill.empty, count: Card.Count.two)
-        let card3 = Card(with: Card.Color.black, shape: Card.Shape.circle, fill: Card.Fill.empty, count: Card.Count.one)
+        let card1 = SETCard(with: SETCard.Color.black, shape: SETCard.Shape.circle, fill: SETCard.Fill.empty, count: SETCard.Count.two)
+        let card2 = SETCard(with: SETCard.Color.black, shape: SETCard.Shape.circle, fill: SETCard.Fill.empty, count: SETCard.Count.two)
+        let card3 = SETCard(with: SETCard.Color.black, shape: SETCard.Shape.circle, fill: SETCard.Fill.empty, count: SETCard.Count.one)
         guard let delegate = setValidationDelegate else {
             return
         }
@@ -158,9 +158,9 @@ class SetTests: XCTestCase {
     }
 
     func testInvalidSetUsingWrongColorAndShape() {
-        let card1 = Card(with: Card.Color.red, shape: Card.Shape.circle, fill: Card.Fill.empty, count: Card.Count.two)
-        let card2 = Card(with: Card.Color.black, shape: Card.Shape.square, fill: Card.Fill.empty, count: Card.Count.two)
-        let card3 = Card(with: Card.Color.black, shape: Card.Shape.circle, fill: Card.Fill.empty, count: Card.Count.two)
+        let card1 = SETCard(with: SETCard.Color.red, shape: SETCard.Shape.circle, fill: SETCard.Fill.empty, count: SETCard.Count.two)
+        let card2 = SETCard(with: SETCard.Color.black, shape: SETCard.Shape.square, fill: SETCard.Fill.empty, count: SETCard.Count.two)
+        let card3 = SETCard(with: SETCard.Color.black, shape: SETCard.Shape.circle, fill: SETCard.Fill.empty, count: SETCard.Count.two)
         guard let delegate = setValidationDelegate else {
             return
         }
@@ -169,9 +169,9 @@ class SetTests: XCTestCase {
     }
 
     func testInvalidSetUsingWrongColorAndFill() {
-        let card1 = Card(with: Card.Color.red, shape: Card.Shape.circle, fill: Card.Fill.striped, count: Card.Count.two)
-        let card2 = Card(with: Card.Color.black, shape: Card.Shape.circle, fill: Card.Fill.empty, count: Card.Count.two)
-        let card3 = Card(with: Card.Color.black, shape: Card.Shape.circle, fill: Card.Fill.empty, count: Card.Count.two)
+        let card1 = SETCard(with: SETCard.Color.red, shape: SETCard.Shape.circle, fill: SETCard.Fill.striped, count: SETCard.Count.two)
+        let card2 = SETCard(with: SETCard.Color.black, shape: SETCard.Shape.circle, fill: SETCard.Fill.empty, count: SETCard.Count.two)
+        let card3 = SETCard(with: SETCard.Color.black, shape: SETCard.Shape.circle, fill: SETCard.Fill.empty, count: SETCard.Count.two)
         guard let delegate = setValidationDelegate else {
             return
         }
@@ -180,9 +180,9 @@ class SetTests: XCTestCase {
     }
 
     func testInvalidSetUsingWrongColorAndCount() {
-        let card1 = Card(with: Card.Color.red, shape: Card.Shape.circle, fill: Card.Fill.empty, count: Card.Count.two)
-        let card2 = Card(with: Card.Color.black, shape: Card.Shape.circle, fill: Card.Fill.empty, count: Card.Count.two)
-        let card3 = Card(with: Card.Color.black, shape: Card.Shape.circle, fill: Card.Fill.empty, count: Card.Count.three)
+        let card1 = SETCard(with: SETCard.Color.red, shape: SETCard.Shape.circle, fill: SETCard.Fill.empty, count: SETCard.Count.two)
+        let card2 = SETCard(with: SETCard.Color.black, shape: SETCard.Shape.circle, fill: SETCard.Fill.empty, count: SETCard.Count.two)
+        let card3 = SETCard(with: SETCard.Color.black, shape: SETCard.Shape.circle, fill: SETCard.Fill.empty, count: SETCard.Count.three)
         guard let delegate = setValidationDelegate else {
             return
         }
@@ -191,9 +191,9 @@ class SetTests: XCTestCase {
     }
 
     func testInvalidSetUsingWrongShapeAndFill() {
-        let card1 = Card(with: Card.Color.black, shape: Card.Shape.circle, fill: Card.Fill.striped, count: Card.Count.two)
-        let card2 = Card(with: Card.Color.black, shape: Card.Shape.circle, fill: Card.Fill.empty, count: Card.Count.two)
-        let card3 = Card(with: Card.Color.black, shape: Card.Shape.triangle, fill: Card.Fill.empty, count: Card.Count.two)
+        let card1 = SETCard(with: SETCard.Color.black, shape: SETCard.Shape.circle, fill: SETCard.Fill.striped, count: SETCard.Count.two)
+        let card2 = SETCard(with: SETCard.Color.black, shape: SETCard.Shape.circle, fill: SETCard.Fill.empty, count: SETCard.Count.two)
+        let card3 = SETCard(with: SETCard.Color.black, shape: SETCard.Shape.triangle, fill: SETCard.Fill.empty, count: SETCard.Count.two)
         guard let delegate = setValidationDelegate else {
             return
         }
@@ -202,9 +202,9 @@ class SetTests: XCTestCase {
     }
 
     func testInvalidSetUsingWrongShapeAndCount() {
-        let card1 = Card(with: Card.Color.black, shape: Card.Shape.circle, fill: Card.Fill.empty, count: Card.Count.two)
-        let card2 = Card(with: Card.Color.black, shape: Card.Shape.circle, fill: Card.Fill.empty, count: Card.Count.three)
-        let card3 = Card(with: Card.Color.black, shape: Card.Shape.triangle, fill: Card.Fill.empty, count: Card.Count.two)
+        let card1 = SETCard(with: SETCard.Color.black, shape: SETCard.Shape.circle, fill: SETCard.Fill.empty, count: SETCard.Count.two)
+        let card2 = SETCard(with: SETCard.Color.black, shape: SETCard.Shape.circle, fill: SETCard.Fill.empty, count: SETCard.Count.three)
+        let card3 = SETCard(with: SETCard.Color.black, shape: SETCard.Shape.triangle, fill: SETCard.Fill.empty, count: SETCard.Count.two)
         guard let delegate = setValidationDelegate else {
             return
         }
@@ -213,9 +213,9 @@ class SetTests: XCTestCase {
     }
 
     func testInvalidSetUsingWrongFillAndCount() {
-        let card1 = Card(with: Card.Color.black, shape: Card.Shape.circle, fill: Card.Fill.empty, count: Card.Count.two)
-        let card2 = Card(with: Card.Color.black, shape: Card.Shape.circle, fill: Card.Fill.filled, count: Card.Count.three)
-        let card3 = Card(with: Card.Color.black, shape: Card.Shape.circle, fill: Card.Fill.empty, count: Card.Count.two)
+        let card1 = SETCard(with: SETCard.Color.black, shape: SETCard.Shape.circle, fill: SETCard.Fill.empty, count: SETCard.Count.two)
+        let card2 = SETCard(with: SETCard.Color.black, shape: SETCard.Shape.circle, fill: SETCard.Fill.filled, count: SETCard.Count.three)
+        let card3 = SETCard(with: SETCard.Color.black, shape: SETCard.Shape.circle, fill: SETCard.Fill.empty, count: SETCard.Count.two)
         guard let delegate = setValidationDelegate else {
             return
         }
@@ -224,9 +224,9 @@ class SetTests: XCTestCase {
     }
 
     func testTwoCommonAttributes() {
-        let card1 = Card(with: Card.Color.black, shape: Card.Shape.circle, fill: Card.Fill.filled, count: Card.Count.two)
-        let card2 = Card(with: Card.Color.blue, shape: Card.Shape.square, fill: Card.Fill.filled, count: Card.Count.two)
-        let card3 = Card(with: Card.Color.red, shape: Card.Shape.triangle, fill: Card.Fill.filled, count: Card.Count.two)
+        let card1 = SETCard(with: SETCard.Color.black, shape: SETCard.Shape.circle, fill: SETCard.Fill.filled, count: SETCard.Count.two)
+        let card2 = SETCard(with: SETCard.Color.blue, shape: SETCard.Shape.square, fill: SETCard.Fill.filled, count: SETCard.Count.two)
+        let card3 = SETCard(with: SETCard.Color.red, shape: SETCard.Shape.triangle, fill: SETCard.Fill.filled, count: SETCard.Count.two)
         guard let delegate = setValidationDelegate else {
             return
         }
@@ -235,9 +235,9 @@ class SetTests: XCTestCase {
     }
 
     func testTwoCommonAttributes2() {
-        let card1 = Card(with: Card.Color.black, shape: Card.Shape.circle, fill: Card.Fill.empty, count: Card.Count.one)
-        let card2 = Card(with: Card.Color.blue, shape: Card.Shape.circle, fill: Card.Fill.empty, count: Card.Count.two)
-        let card3 = Card(with: Card.Color.red, shape: Card.Shape.circle, fill: Card.Fill.empty, count: Card.Count.three)
+        let card1 = SETCard(with: SETCard.Color.black, shape: SETCard.Shape.circle, fill: SETCard.Fill.empty, count: SETCard.Count.one)
+        let card2 = SETCard(with: SETCard.Color.blue, shape: SETCard.Shape.circle, fill: SETCard.Fill.empty, count: SETCard.Count.two)
+        let card3 = SETCard(with: SETCard.Color.red, shape: SETCard.Shape.circle, fill: SETCard.Fill.empty, count: SETCard.Count.three)
         guard let delegate = setValidationDelegate else {
             return
         }
@@ -246,9 +246,9 @@ class SetTests: XCTestCase {
     }
 
     func testTwoCommonAttributes3() {
-        let card1 = Card(with: Card.Color.red, shape: Card.Shape.square, fill: Card.Fill.empty, count: Card.Count.one)
-        let card2 = Card(with: Card.Color.red, shape: Card.Shape.square, fill: Card.Fill.filled, count: Card.Count.two)
-        let card3 = Card(with: Card.Color.red, shape: Card.Shape.square, fill: Card.Fill.striped, count: Card.Count.three)
+        let card1 = SETCard(with: SETCard.Color.red, shape: SETCard.Shape.square, fill: SETCard.Fill.empty, count: SETCard.Count.one)
+        let card2 = SETCard(with: SETCard.Color.red, shape: SETCard.Shape.square, fill: SETCard.Fill.filled, count: SETCard.Count.two)
+        let card3 = SETCard(with: SETCard.Color.red, shape: SETCard.Shape.square, fill: SETCard.Fill.striped, count: SETCard.Count.three)
         guard let delegate = setValidationDelegate else {
             return
         }
@@ -257,9 +257,9 @@ class SetTests: XCTestCase {
     }
 
     func testOneCommonAttribute() {
-        let card1 = Card(with: Card.Color.black, shape: Card.Shape.circle, fill: Card.Fill.empty, count: Card.Count.one)
-        let card2 = Card(with: Card.Color.blue, shape: Card.Shape.square, fill: Card.Fill.filled, count: Card.Count.two)
-        let card3 = Card(with: Card.Color.red, shape: Card.Shape.triangle, fill: Card.Fill.striped, count: Card.Count.three)
+        let card1 = SETCard(with: SETCard.Color.black, shape: SETCard.Shape.circle, fill: SETCard.Fill.empty, count: SETCard.Count.one)
+        let card2 = SETCard(with: SETCard.Color.blue, shape: SETCard.Shape.square, fill: SETCard.Fill.filled, count: SETCard.Count.two)
+        let card3 = SETCard(with: SETCard.Color.red, shape: SETCard.Shape.triangle, fill: SETCard.Fill.striped, count: SETCard.Count.three)
         guard let delegate = setValidationDelegate else {
             return
         }
@@ -268,9 +268,9 @@ class SetTests: XCTestCase {
     }
 
     func testThreeCommonAttributes() {
-        let card1 = Card(with: Card.Color.black, shape: Card.Shape.circle, fill: Card.Fill.empty, count: Card.Count.one)
-        let card2 = Card(with: Card.Color.blue, shape: Card.Shape.circle, fill: Card.Fill.empty, count: Card.Count.one)
-        let card3 = Card(with: Card.Color.red, shape: Card.Shape.circle, fill: Card.Fill.empty, count: Card.Count.one)
+        let card1 = SETCard(with: SETCard.Color.black, shape: SETCard.Shape.circle, fill: SETCard.Fill.empty, count: SETCard.Count.one)
+        let card2 = SETCard(with: SETCard.Color.blue, shape: SETCard.Shape.circle, fill: SETCard.Fill.empty, count: SETCard.Count.one)
+        let card3 = SETCard(with: SETCard.Color.red, shape: SETCard.Shape.circle, fill: SETCard.Fill.empty, count: SETCard.Count.one)
         guard let delegate = setValidationDelegate else {
             return
         }
@@ -279,9 +279,9 @@ class SetTests: XCTestCase {
     }
 
     func testImpossibleCaseOfFourCommonAttributes() {
-        let card1 = Card(with: Card.Color.black, shape: Card.Shape.circle, fill: Card.Fill.empty, count: Card.Count.one)
-        let card2 = Card(with: Card.Color.black, shape: Card.Shape.circle, fill: Card.Fill.empty, count: Card.Count.one)
-        let card3 = Card(with: Card.Color.black, shape: Card.Shape.circle, fill: Card.Fill.empty, count: Card.Count.one)
+        let card1 = SETCard(with: SETCard.Color.black, shape: SETCard.Shape.circle, fill: SETCard.Fill.empty, count: SETCard.Count.one)
+        let card2 = SETCard(with: SETCard.Color.black, shape: SETCard.Shape.circle, fill: SETCard.Fill.empty, count: SETCard.Count.one)
+        let card3 = SETCard(with: SETCard.Color.black, shape: SETCard.Shape.circle, fill: SETCard.Fill.empty, count: SETCard.Count.one)
         guard let delegate = setValidationDelegate else {
             return
         }
@@ -290,9 +290,9 @@ class SetTests: XCTestCase {
     }
 
     func testNoCommonAttributes() {
-        let card1 = Card(with: .black, shape: .circle, fill: .empty, count: .one)
-        let card2 = Card(with: .blue, shape: .square, fill: .filled, count: .two)
-        let card3 = Card(with: .red, shape: .triangle, fill: .striped, count: .three)
+        let card1 = SETCard(with: .black, shape: .circle, fill: .empty, count: .one)
+        let card2 = SETCard(with: .blue, shape: .square, fill: .filled, count: .two)
+        let card3 = SETCard(with: .red, shape: .triangle, fill: .striped, count: .three)
         guard let delegate = setValidationDelegate else {
             return
         }
