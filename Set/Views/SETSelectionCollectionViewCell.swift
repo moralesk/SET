@@ -1,5 +1,5 @@
 //
-//  SelectionCollectionViewCell.swift
+//  SETSelectionCollectionViewCell.swift
 //  Set
 //
 //  Created by Kelly Morales on 3/25/18.
@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 
 /// UICollectionViewCell used in a UICollectionView displaying selectable options, such as the number of players for the game
-class SelectionCollectionViewCell: UICollectionViewCell {
+class SETSelectionCollectionViewCell: UICollectionViewCell {
     private var labelText: String?
     private let label = UILabel()
 

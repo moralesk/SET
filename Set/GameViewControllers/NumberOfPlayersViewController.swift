@@ -72,7 +72,7 @@ class NumberOfPlayersViewController: UIViewController {
             guard let playerSelectionView = playerSelectionView else {
                 return
             }
-            playerSelectionView.register(SelectionCollectionViewCell.self, forCellWithReuseIdentifier: SelectionCollectionViewCell.reuseID())
+            playerSelectionView.register(SETSelectionCollectionViewCell.self, forCellWithReuseIdentifier: SETSelectionCollectionViewCell.reuseID())
             playerSelectionView.isScrollEnabled = false
             playerSelectionView.backgroundColor = .white
             playerSelectionView.delegate = self
@@ -149,7 +149,7 @@ extension NumberOfPlayersViewController: UICollectionViewDataSource {
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SelectionCollectionViewCell.reuseID(), for: indexPath) as? SelectionCollectionViewCell else {
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SETSelectionCollectionViewCell.reuseID(), for: indexPath) as? SETSelectionCollectionViewCell else {
             return UICollectionViewCell()
         }
         cell.initialize(with: "\(indexPath.row + 1)")
