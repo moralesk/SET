@@ -13,7 +13,7 @@ class SETMultiPlayerDataSource: SETGameBoardDataSourceProtocol {
 
     weak var gameBoardDelegate: SETGameBoardProtocol?
     private var numberOfPlayers: Int?
-    private var playerButtons: [PlayerButton] = []
+    private var playerButtons: [SETPlayerButton] = []
 
     /// Determines if the cards can be selected
     private var cardSelectionEnabled: Bool = false {
@@ -67,8 +67,8 @@ class SETMultiPlayerDataSource: SETGameBoardDataSourceProtocol {
     }
 
     /// Adds the color and constraints for a player's button
-    private func drawButtonForPlayer(num: Int) -> PlayerButton {
-        let button = PlayerButton(color: getColorForPlayer(num))
+    private func drawButtonForPlayer(num: Int) -> SETPlayerButton {
+        let button = SETPlayerButton(color: getColorForPlayer(num))
         if let delegate = gameBoardDelegate as? UIViewController {
             delegate.view.addSubview(button)
         }
@@ -77,7 +77,7 @@ class SETMultiPlayerDataSource: SETGameBoardDataSourceProtocol {
     }
 
     /// Sets the location and adds constraints for a player button depending on the player number
-    private func setConstraintsForPlayerButton(button: PlayerButton, number: Int) {
+    private func setConstraintsForPlayerButton(button: SETPlayerButton, number: Int) {
         guard let numberOfPlayers = numberOfPlayers else {
             return
         }

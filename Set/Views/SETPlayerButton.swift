@@ -1,5 +1,5 @@
 //
-//  PlayerButton.swift
+//  SETPlayerButton.swift
 //  Set
 //
 //  Created by Kelly Morales on 3/25/18.
@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 
 /// Button placed around the gameboard used for the players to select their SETs.
-class PlayerButton: UIButton {
+class SETPlayerButton: UIButton {
 
     var isSelecting: Bool = false
     override var isHighlighted: Bool {
