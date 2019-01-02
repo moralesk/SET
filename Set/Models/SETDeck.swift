@@ -1,5 +1,5 @@
 //
-//  Deck.swift
+//  SETDeck.swift
 //  Set
 //
 //  Created by Kelly Morales on 4/6/18.
@@ -8,9 +8,9 @@
 
 import Foundation
 
-let sharedDeck = Deck()
+let sharedDeck = SETDeck()
 
-class Deck: SETValidationProtocol {
+class SETDeck: SETValidationProtocol {
 
     private var cards: [SETCard] = []
     /// The number of cards remaining in the Deck
