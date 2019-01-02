@@ -1,5 +1,5 @@
 //
-//  NumberOfPlayersViewController.swift
+//  SETNumberOfPlayersViewController.swift
 //  Set
 //
 //  Created by Kelly Morales on 3/24/18.
@@ -12,7 +12,7 @@ import UIKit
 /**
  View controller displaying the options for the number of players to play the game
  */
-class NumberOfPlayersViewController: UIViewController {
+class SETNumberOfPlayersViewController: UIViewController {
 
     /// prompt for selecting number of players
     private let promptLabel = UILabel()
@@ -118,14 +118,14 @@ class NumberOfPlayersViewController: UIViewController {
         guard let num = numberOfPlayers else {
             return
         }
-        let gameBoardVC = GameBoardViewController(numberOfPlayers: num)
+        let gameBoardVC = SETGameBoardViewController(numberOfPlayers: num)
         sharedDeck.shuffle()
         navigationController?.pushViewController(gameBoardVC, animated: true)
     }
 }
 
 // MARK:- UICollectionViewDelegate
-extension NumberOfPlayersViewController: UICollectionViewDelegate {
+extension SETNumberOfPlayersViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         collectionView.deselectItem(at: indexPath, animated: true)
         numberOfPlayers = indexPath.row + 1
@@ -143,7 +143,7 @@ extension NumberOfPlayersViewController: UICollectionViewDelegate {
 }
 
 // MARK:- UICollectionViewDataSource
-extension NumberOfPlayersViewController: UICollectionViewDataSource {
+extension SETNumberOfPlayersViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return maxNumberOfPlayers
     }
@@ -158,7 +158,7 @@ extension NumberOfPlayersViewController: UICollectionViewDataSource {
 }
 
 // MARK:- UICollectionViewDelegateFlowLayout
-extension NumberOfPlayersViewController: UICollectionViewDelegateFlowLayout {
+extension SETNumberOfPlayersViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: collectionViewCellWidth, height: collectionViewCellWidth)
     }

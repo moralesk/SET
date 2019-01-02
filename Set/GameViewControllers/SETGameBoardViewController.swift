@@ -1,5 +1,5 @@
 //
-//  GameBoardViewController.swift
+//  SETGameBoardViewController.swift
 //  Set
 //
 //  Created by Kelly Morales on 3/25/18.
@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 
 /// Where the game is played. Initialized with a number of players to determine if and how many buttons are added around the gameboard.
-class GameBoardViewController: UIViewController, SETGameBoardProtocol {
+class SETGameBoardViewController: UIViewController, SETGameBoardProtocol {
 
     var gameBoard: UICollectionView?
 
@@ -111,7 +111,7 @@ class GameBoardViewController: UIViewController, SETGameBoardProtocol {
 }
 
 // MARK:- UICollectionViewDataSource
-extension GameBoardViewController: UICollectionViewDataSource, SETValidationProtocol {
+extension SETGameBoardViewController: UICollectionViewDataSource, SETValidationProtocol {
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         // The number of cards per row should divide evenly into the number of cards we are tracking
         // if not, we add another section for the remaining cards (this should only happen when the deck
@@ -164,7 +164,7 @@ extension GameBoardViewController: UICollectionViewDataSource, SETValidationProt
 }
 
 // MARK:- UICollectionViewDelegateFlowLayout
-extension GameBoardViewController: UICollectionViewDelegateFlowLayout {
+extension SETGameBoardViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: collectionViewCellWidth, height: collectionViewCellHeight)
     }

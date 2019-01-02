@@ -1,5 +1,5 @@
 //
-//  MainMenuViewController.swift
+//  SETMainMenuViewController.swift
 //  Set
 //
 //  Created by Kelly Morales on 3/24/18.
@@ -12,7 +12,7 @@ import UIKit
 /**
  Root view controller. Prompts user to view tutorial or start game flow.
  */
-class MainMenuViewController: UIViewController {
+class SETMainMenuViewController: UIViewController {
 
     let greetingLabel = UILabel()
     var playButton: SETMainSelectionButton?
@@ -121,7 +121,7 @@ class MainMenuViewController: UIViewController {
 
     // MARK: Selectors
     @objc private func playSelected() {
-        let numberOfPlayersVC = NumberOfPlayersViewController()
+        let numberOfPlayersVC = SETNumberOfPlayersViewController()
         navigationController?.pushViewController(numberOfPlayersVC, animated: true)
     }
 

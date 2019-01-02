@@ -8,7 +8,7 @@
 
 import Foundation
 
-/// Protocol to abstract data source logic from the GameBoardViewController
+/// Protocol to abstract data source logic from the SETGameBoardViewController
 protocol SETGameBoardDataSourceProtocol: AnyObject {
     /// A reference to an object that contains the gameBoard, generally a UIViewController
     var gameBoardDelegate: SETGameBoardProtocol? { get set }
