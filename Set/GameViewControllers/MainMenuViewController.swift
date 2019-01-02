@@ -15,9 +15,9 @@ import UIKit
 class MainMenuViewController: UIViewController {
 
     let greetingLabel = UILabel()
-    var playButton: MainSelectionButton?
-    var tutorialButton: MainSelectionButton?
-    var buttons: [MainSelectionButton] = []
+    var playButton: SETMainSelectionButton?
+    var tutorialButton: SETMainSelectionButton?
+    var buttons: [SETMainSelectionButton] = []
     var addButtonPadding = false
 
     // MARK: Lifecycle Methods
@@ -45,7 +45,7 @@ class MainMenuViewController: UIViewController {
 
     private func setupPlayButton() {
         if playButton?.superview == nil {
-            playButton = MainSelectionButton(text: "PLAY GAME")
+            playButton = SETMainSelectionButton(text: "PLAY GAME")
             guard let playButton = playButton else {
                 return
             }
@@ -56,7 +56,7 @@ class MainMenuViewController: UIViewController {
 
     private func setupTutorialButton() {
         if tutorialButton?.superview == nil {
-            tutorialButton = MainSelectionButton(text: "TUTORIAL")
+            tutorialButton = SETMainSelectionButton(text: "TUTORIAL")
             guard let tutorialButton = tutorialButton else {
                 return
             }

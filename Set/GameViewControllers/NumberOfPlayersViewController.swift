@@ -26,7 +26,7 @@ class NumberOfPlayersViewController: UIViewController {
     }
     private let spaceBetweenCollectionViewCells: CGFloat = 5.0
     private var numberOfPlayers: Int?
-    private var continueButton: MainSelectionButton?
+    private var continueButton: SETMainSelectionButton?
 
     // MARK:- Lifecycle Methods
     override func viewDidLoad() {
@@ -91,7 +91,7 @@ class NumberOfPlayersViewController: UIViewController {
     // MARK: ContinueButton
     private func setupContinueButton() {
         if continueButton?.superview == nil {
-            continueButton = MainSelectionButton()
+            continueButton = SETMainSelectionButton()
             guard let continueButton = continueButton else {
                 return
             }
