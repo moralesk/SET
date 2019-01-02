@@ -22,6 +22,6 @@ protocol SETGameBoardDataSourceProtocol: AnyObject {
      */
     func completeGameBoardConstraints()
 
-    /// Determines if the given 3 cards are a SET, and updates the model and some UI accordingly
-    func processSet(_ cards: [Card])
+    /// Handler for a player selecting a SET, with a flag for if the SET was valid or not
+    func processSet(valid: Bool)
 }

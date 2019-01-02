@@ -9,7 +9,7 @@
 import UIKit
 
 /// Instance of SETGameBoardDataSourceProtocol for a single player set up
-class SETSinglePlayerDataSource: SETGameBoardDataSourceProtocol, SETValidationProtocol {
+class SETSinglePlayerDataSource: SETGameBoardDataSourceProtocol {
 
     weak var gameBoardDelegate: SETGameBoardProtocol?
     private var singlePlayerScoreLabel: UILabel = UILabel()
@@ -32,8 +32,8 @@ class SETSinglePlayerDataSource: SETGameBoardDataSourceProtocol, SETValidationPr
         NSLayoutConstraint(item: gameBoard, attribute: NSLayoutAttribute.bottom, relatedBy: NSLayoutRelation.equal, toItem: singlePlayerScoreLabel, attribute: NSLayoutAttribute.top, multiplier: 1, constant: 0).isActive = true
     }
 
-    func processSet(_ cards: [Card]) {
-        if isSet(cards) {
+    func processSet(valid: Bool) {
+        if valid {
             singlePlayerScore += 1
         }
     }

@@ -111,7 +111,7 @@ class GameBoardViewController: UIViewController, SETGameBoardProtocol {
 }
 
 // MARK:- UICollectionViewDataSource
-extension GameBoardViewController: UICollectionViewDataSource {
+extension GameBoardViewController: UICollectionViewDataSource, SETValidationProtocol {
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         // The number of cards per row should divide evenly into the number of cards we are tracking
         // if not, we add another section for the remaining cards (this should only happen when the deck
@@ -157,7 +157,7 @@ extension GameBoardViewController: UICollectionViewDataSource {
                 return
             }
             let set = [card1, card2, card3]
-            dataSourceDelegate?.processSet(set)
+            dataSourceDelegate?.processSet(valid: isSet(set))
             resetCurrentSet()
         }
     }

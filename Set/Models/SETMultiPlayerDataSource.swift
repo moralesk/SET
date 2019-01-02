@@ -9,7 +9,7 @@
 import UIKit
 
 /// Instance of SETGameBoardDataSourceProtocol for a multi player set up
-class SETMultiPlayerDataSource: SETGameBoardDataSourceProtocol, SETValidationProtocol {
+class SETMultiPlayerDataSource: SETGameBoardDataSourceProtocol {
 
     weak var gameBoardDelegate: SETGameBoardProtocol?
     private var numberOfPlayers: Int?
@@ -43,10 +43,10 @@ class SETMultiPlayerDataSource: SETGameBoardDataSourceProtocol, SETValidationPro
         gameBoard.isUserInteractionEnabled = false
     }
 
-    func processSet(_ cards: [Card]) {
+    func processSet(valid: Bool) {
         for button in playerButtons {
             if button.isSelecting {
-                if isSet(cards) {
+                if valid {
                     button.incrementScore()
                 }
                 button.setState(selected: false)
