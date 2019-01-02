@@ -1,5 +1,5 @@
 //
-//  CardCollectionViewCell.swift
+//  SETCardCollectionViewCell.swift
 //  Set
 //
 //  Created by Kelly Morales on 4/4/18.
@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 
 /// Displays the Card cells in the gameboard collectionView.
-class CardCollectionViewCell: UICollectionViewCell {
+class SETCardCollectionViewCell: UICollectionViewCell {
 
     var card: SETCard? {
         didSet {

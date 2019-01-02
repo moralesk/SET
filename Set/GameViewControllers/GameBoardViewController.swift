@@ -37,7 +37,7 @@ class GameBoardViewController: UIViewController, SETGameBoardProtocol {
 
     private var dataSourceDelegate: SETGameBoardDataSourceProtocol?
     private var currentCards: [SETCard] = []
-    lazy private var currentSet: [CardCollectionViewCell] = []
+    lazy private var currentSet: [SETCardCollectionViewCell] = []
 
     // MARK:- Lifecycle Methods
     init(numberOfPlayers: Int) {
@@ -77,7 +77,7 @@ class GameBoardViewController: UIViewController, SETGameBoardProtocol {
             guard let gameBoard = gameBoard else {
                 return
             }
-            gameBoard.register(CardCollectionViewCell.self, forCellWithReuseIdentifier: CardCollectionViewCell.reuseID())
+            gameBoard.register(SETCardCollectionViewCell.self, forCellWithReuseIdentifier: SETCardCollectionViewCell.reuseID())
             gameBoard.isScrollEnabled = false
             gameBoard.backgroundColor = .white
             gameBoard.delegate = self
@@ -138,7 +138,7 @@ extension GameBoardViewController: UICollectionViewDataSource, SETValidationProt
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CardCollectionViewCell.reuseID(), for: indexPath) as? CardCollectionViewCell else {
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SETCardCollectionViewCell.reuseID(), for: indexPath) as? SETCardCollectionViewCell else {
             return UICollectionViewCell()
         }
         // uses 2d array to grab card from 1d array
@@ -147,7 +147,7 @@ extension GameBoardViewController: UICollectionViewDataSource, SETValidationProt
     }
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        guard let cell = collectionView.cellForItem(at: indexPath) as? CardCollectionViewCell else {
+        guard let cell = collectionView.cellForItem(at: indexPath) as? SETCardCollectionViewCell else {
             return
         }
         cell.isChosen = true
